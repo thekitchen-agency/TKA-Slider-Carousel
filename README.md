@@ -80,6 +80,32 @@ The package comes with minimal base styles. You can import the default CSS:
 import 'tka-slider-carousel/style.css';
 ```
 
+## � Development & Releases
+
+This project uses **Semantic Release** to automate versioning and NPM publishing. Versioning is determined by your commit messages.
+
+### Commit Conventions
+To trigger a release, use the following prefix in your commit messages:
+
+- **`fix: ...`** → 🛠️ **Patch Release** (e.g., 1.0.2 → 1.0.3)
+  - Use for bug fixes.
+- **`feat: ...`** → ✨ **Minor Release** (e.g., 1.0.2 → 1.1.0)
+  - Use for new features.
+- **`perf: ...`** → 🚀 **Patch Release**
+  - Use for performance improvements.
+- **`feat!: ...`** or **`fix!: ...`** → 💥 **Major Release** (e.g., 1.1.0 → 2.0.0)
+  - Use for breaking changes. Include `BREAKING CHANGE:` in the commit footer.
+
+### Automated Workflow
+1.  Push your changes to the `main` branch.
+2.  GitHub Actions will analyze your commits.
+3.  If a release-triggering commit is found, it will:
+    - Bump the version in `package.json`.
+    - Update `CHANGELOG.md`.
+    - Create a new Git Tag and GitHub Release.
+    - Publish to NPM.
+
+---
+
 ## 📄 License
 ISC © 2026
-# TKA-Slider-Carousel
