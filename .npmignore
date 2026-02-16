@@ -1,0 +1,14 @@
+# Exclude development files from NPM package
+index.html
+screenshots/
+dist/screenshots/
+src/
+vite.config.js
+.gemini/
+.agent/
+.system_generated/
+*.png
+*.webp
+*.md
+!README.md
+!LICENSE

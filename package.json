@@ -1,0 +1,47 @@
+{
+  "name": "tka-slider-carousel",
+  "version": "1.0.2",
+  "description": "A premium GSAP-powered slider library with infinite looping and drag physics.",
+  "type": "module",
+  "main": "./dist/tka-slider.umd.js",
+  "module": "./dist/tka-slider.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/tka-slider.es.js",
+      "require": "./dist/tka-slider.umd.js"
+    },
+    "./style.css": "./dist/tka-slider-carousel.css"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "prepublishOnly": "npm run build"
+  },
+  "peerDependencies": {
+    "gsap": "^3.12.5"
+  },
+  "devDependencies": {
+    "gsap": "^3.12.5",
+    "sass": "^1.83.4",
+    "vite": "^6.0.7"
+  },
+  "keywords": [
+    "slider",
+    "carousel",
+    "gsap",
+    "animation",
+    "infinite",
+    "draggable"
+  ],
+  "author": "thekitchen.agency | Tiago Dias",
+  "license": "ISC",
+  "publishConfig": {
+    "access": "public"
+  }
+}
