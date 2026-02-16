@@ -1,6 +1,6 @@
 {
   "name": "tka-slider-carousel",
-  "version": "1.0.3",
+  "version": "1.0.2",
   "description": "A premium GSAP-powered slider library with infinite looping and drag physics.",
   "type": "module",
   "main": "./dist/tka-slider.umd.js",
