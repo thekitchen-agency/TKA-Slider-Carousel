@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/thekitchen-agency/TKA-Slider-Carousel/compare/v1.1.0...v1.2.0) (2026-02-17)
+
+
+### Features
+
+* added documentation ([36efdbb](https://github.com/thekitchen-agency/TKA-Slider-Carousel/commit/36efdbb46c5a63ec5ca7d49a0794589d137709fe))
+
 # [1.1.0](https://github.com/thekitchen-agency/TKA-Slider-Carousel/compare/v1.0.3...v1.1.0) (2026-02-17)
 
 
