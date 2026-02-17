@@ -1,1 +1,0 @@
-import{g as e,D as t}from"./Draggable-BIBO0-Gf.js";import{S as a}from"./Slider-TB0KBL4t.js";e.registerPlugin(t);const r=new a("#revealer",{type:"fan",revealOnMount:!1,loop:!0,activeRotation:-5,activeScale:1.1,activeTranslateY:-20}).mount();document.getElementById("reveal-btn").addEventListener("click",()=>{r.reveal()});
