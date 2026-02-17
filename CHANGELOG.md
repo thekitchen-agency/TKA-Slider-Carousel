@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/thekitchen-agency/TKA-Slider-Carousel/compare/v1.0.3...v1.1.0) (2026-02-17)
+
+
+### Features
+
+* added methods to control slider apart from internal controls ([715d6b1](https://github.com/thekitchen-agency/TKA-Slider-Carousel/commit/715d6b1ee1bccc033878300ea14f779c967179b0))
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
