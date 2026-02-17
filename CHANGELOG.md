@@ -1,3 +1,15 @@
+# [1.4.0](https://github.com/thekitchen-agency/TKA-Slider-Carousel/compare/v1.3.0...v1.4.0) (2026-02-17)
+
+
+### Bug Fixes
+
+* correct setup-node action in deploy workflow ([adaff49](https://github.com/thekitchen-agency/TKA-Slider-Carousel/commit/adaff49afb8d672513b5032da664424c0352f8bb))
+
+
+### Features
+
+* fix path resolution in documentation build config ([a8d771c](https://github.com/thekitchen-agency/TKA-Slider-Carousel/commit/a8d771c8283038cfd413782ef91ba164a70e2678))
+
 # [1.3.0](https://github.com/thekitchen-agency/TKA-Slider-Carousel/compare/v1.2.0...v1.3.0) (2026-02-17)
 
 
