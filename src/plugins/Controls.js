@@ -39,8 +39,14 @@ export default function Controls(slider, Components, events) {
             } else if (direction === '<') {
                 Move.to(index - 1);
             } else if (direction.startsWith('=')) {
-                // Jump to specific index, e.g. "=2"
-                const moveIndex = parseInt(direction.substring(1));
+                // Jump to specific logical index, e.g. "=2"
+                let moveIndex = parseInt(direction.substring(1));
+
+                // Account for clones if in loop mode
+                if (slider.options.loop && slider.options.type === 'slide') {
+                    moveIndex += (slider.clonesCount || 0);
+                }
+
                 Move.to(moveIndex);
             }
         }

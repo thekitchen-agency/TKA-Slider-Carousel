@@ -151,4 +151,39 @@ export class Slider {
         }
         return this;
     }
+
+    /**
+     * Programmatically move the slider to a specific slide or direction.
+     * Supports:
+     * - Number: logical index (e.g. 2 for 3rd slide)
+     * - Pattern: '>', '<', '=2' (for logical index 2)
+     * 
+     * @param {string|number} pattern 
+     * @returns {this}
+     */
+    go(pattern) {
+        if (this.components.Controls) {
+            const p = typeof pattern === 'number' ? `=${pattern}` : pattern;
+            this.components.Controls.move(p);
+        }
+        return this;
+    }
+
+    /**
+     * Instantly jump to a specific logical index without animation.
+     * @param {number} index 
+     * @returns {this}
+     */
+    jump(index) {
+        let target = index;
+        if (this.options.loop && this.options.type === 'slide') {
+            target += (this.clonesCount || 0);
+        }
+
+        if (this.components.Move) {
+            this.components.Move.jump(target);
+        }
+
+        return this;
+    }
 }

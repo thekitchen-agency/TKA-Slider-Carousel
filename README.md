@@ -59,6 +59,24 @@ const slider = new Slider('#my-slider', {
 }).mount();
 ```
 
+## 🎮 Public Methods
+
+Once you have a slider instance, you can control it programmatically:
+
+```javascript
+// Animate to a specific index (0-indexed)
+// This handles loops automatically!
+slider.go(2); 
+
+// Use patterns for relative movement
+slider.go('>'); // Next
+slider.go('<'); // Prev
+slider.go('=0'); // Jump to first slide with animation
+
+// Jump to a specific index instantly (no animation)
+slider.jump(3);
+```
+
 ## ⚙️ Options
 | Option | Type | Default | Description |
 | --- | --- | --- | --- |

@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
+## [1.1.0] - 2026-02-17
+### Added
+- Public `.go()` method for programmatic navigation with pattern support (`>`, `<`, `=index`).
+- Public `.jump()` method for instant slider relocation without animation.
+- Both methods are logical-index aware and handle clones/looping automatically.
+
+### Improved
+- Internal `Controls` move logic now correctly handles logical indexing for jump patterns in loop-enabled sliders.
+
 ## [1.0.2] - 2026-02-16
 ### Added
 - New `revealOnMount` configuration option to allow mounting sliders without immediate entrance animations.
