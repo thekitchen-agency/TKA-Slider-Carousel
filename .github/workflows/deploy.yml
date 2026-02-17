@@ -23,7 +23,9 @@ jobs:
         run: npm install
 
       - name: Build site
-        run: npx vite build -c vite.config.site.js
+        run: |
+          npx vite build -c vite.config.site.js
+          touch site-dist/.nojekyll
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4
