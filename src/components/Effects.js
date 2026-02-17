@@ -31,7 +31,7 @@ export default function Effects(slider, Components, events) {
             if (type === 'fan') {
                 // Entrance "Deal" Animation
                 this.update(0, true);
-                const inners = Components.Html.slides.map(s => s.querySelector('.demo-slide')).filter(Boolean);
+                const inners = Components.Html.slides.map(s => s.querySelector('.demo-slide') || s.children[0]).filter(Boolean);
                 gsap.from(inners, {
                     y: 100,
                     rotation: 0,
@@ -76,7 +76,7 @@ export default function Effects(slider, Components, events) {
             const duration = jump ? 0 : (slider.state.animationDuration || 0);
 
             Html.slides.forEach((slide, i) => {
-                const inner = slide.querySelector('.demo-slide');
+                let inner = slide.querySelector('.demo-slide') || slide.children[0];
                 if (!inner) return;
 
                 let normalizedDistance, signedDistance;
@@ -97,7 +97,10 @@ export default function Effects(slider, Components, events) {
                     signedDistance = diff;
                 } else {
                     const slideCoord = Track.getCoordinate(i);
+                    // Track.getCoordinate(i) is already focus-relative, 
+                    // so relativePos = 0 for the slide at the focus point.
                     const relativePos = trackX + slideCoord;
+
                     normalizedDistance = Math.abs(relativePos) / slideWidthWithGap;
                     signedDistance = relativePos / slideWidthWithGap;
                 }
@@ -117,6 +120,39 @@ export default function Effects(slider, Components, events) {
                     props.z = normalizedDistance * -100;
                     props.opacity = this.isRevealed ? (1 - (Math.min(normalizedDistance, 2) * 0.2)) : 0;
                     props.scale = scale;
+                }
+                else if (type === '360') {
+                    const container = inner.querySelector('.tka-360-container') || inner;
+                    const frames = Array.from(container.children).filter(child =>
+                        child.classList.contains('tka-360-frame') ||
+                        container.children.length > 1
+                    );
+                    const totalFrames = frames.length;
+
+                    if (totalFrames > 1) {
+                        const rotationSpeed = slider.options.rotationSpeed || 1;
+                        // rotationSpeed is now "Frames per Slide Width"
+                        // Distance -1 (left neighbor) * Speed 2 = +2 frames shift (90 degrees for 8 frames)
+                        let frameIndex = Math.round(-signedDistance * rotationSpeed) % totalFrames;
+                        if (frameIndex < 0) frameIndex += totalFrames;
+
+                        // Performance optimization: only touch DOM if frame changed
+                        if (container._tka_last_frame !== frameIndex) {
+                            frames.forEach((frame, idx) => {
+                                const active = idx === frameIndex;
+                                frame.style.opacity = active ? '1' : '0';
+                                frame.style.visibility = active ? 'visible' : 'hidden';
+                                frame.style.zIndex = active ? '2' : '1';
+                            });
+                            container._tka_last_frame = frameIndex;
+                        }
+                    }
+
+                    props.scale = scale;
+                    props.opacity = this.isRevealed ? 1 : 0;
+                    props.x = 0;
+                    props.y = 0;
+                    props.rotationY = 0;
                 }
                 else if (type === 'fade' || type === 'fan') {
                     if (type === 'fade') {

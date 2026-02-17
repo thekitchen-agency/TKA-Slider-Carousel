@@ -9,7 +9,7 @@ A premium, high-performance slider library powered by **GSAP**. Designed for sil
 
 ## ✨ Features
 
-- 🎭 **Advanced Transitions**: Default `slide`, smooth `fade`, premium 3D `coverflow`, and our flagship `fan` stack.
+- 🎭 **Advanced Transitions**: Default `slide`, smooth `fade`, premium 3D `coverflow`, flagship `fan` stack, and interactive `360` object rotation.
 - 🔄 **Infinite Looping**: Seamlessly loops slides with intelligent cloning.
 - 📱 **Fully Responsive**: Breakpoint-based configuration for `perView`, `gap`, and even transition types.
 - 🖱️ **Drag & Touch Support**: Powered by GSAP Draggable with momentum and snapping.

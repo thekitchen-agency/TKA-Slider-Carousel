@@ -1,5 +1,5 @@
-import { Events } from './Events';
-import { Components as CoreComponents } from '../components/index';
+import { Events } from './Events.js';
+import { Components as CoreComponents } from '../components/index.js';
 
 
 export class Slider {

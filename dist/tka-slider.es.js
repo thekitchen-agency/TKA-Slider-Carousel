@@ -1,5 +1,5 @@
 import d from "gsap";
-import { Draggable as O } from "gsap/Draggable";
+import { Draggable as I } from "gsap/Draggable";
 class V {
   constructor() {
     this.events = {};
@@ -10,9 +10,9 @@ class V {
    * @param {Function} callback - The callback function.
    * @returns {Object} - An object with an `off` method to unsubscribe.
    */
-  on(o, a) {
-    return this.events[o] || (this.events[o] = []), this.events[o].push(a), {
-      off: () => this.off(o, a)
+  on(o, s) {
+    return this.events[o] || (this.events[o] = []), this.events[o].push(s), {
+      off: () => this.off(o, s)
     };
   }
   /**
@@ -20,19 +20,19 @@ class V {
    * @param {string} event - The event name.
    * @param {Function} callback - The callback function to remove.
    */
-  off(o, a) {
-    this.events[o] && (this.events[o] = this.events[o].filter((f) => f !== a));
+  off(o, s) {
+    this.events[o] && (this.events[o] = this.events[o].filter((f) => f !== s));
   }
   /**
    * Emit an event.
    * @param {string} event - The event name.
    * @param {any} data - Data to pass to listeners.
    */
-  emit(o, a = null) {
-    this.events[o] && this.events[o].forEach((f) => f(a));
+  emit(o, s = null) {
+    this.events[o] && this.events[o].forEach((f) => f(s));
   }
 }
-function $(t, o, a) {
+function $(t, o, s) {
   return {
     root: null,
     track: null,
@@ -45,7 +45,7 @@ function $(t, o, a) {
     }
   };
 }
-function B(t, o, a) {
+function B(t, o, s) {
   return {
     /**
      * Coordinate offset for the track.
@@ -57,13 +57,13 @@ function B(t, o, a) {
     slideWidth: 0,
     mount() {
       this.calculate(), window.addEventListener("resize", () => {
-        this.calculate(), a.emit("resize");
+        this.calculate(), s.emit("resize");
       });
     },
     calculate() {
-      const { Html: e } = o, { perView: s, gap: i } = t.options, n = e.root.offsetWidth;
-      this.slideWidth = (n - i * (s - 1)) / s, e.slides.forEach((r) => {
-        r.style.width = `${this.slideWidth}px`, r.style.marginRight = `${i}px`;
+      const { Html: e } = o, { perView: a, gap: i } = t.options, n = e.root.offsetWidth;
+      this.slideWidth = (n - i * (a - 1)) / a, e.slides.forEach((c) => {
+        c.style.width = `${this.slideWidth}px`, c.style.marginRight = `${i}px`;
       }), t.log(`Track calculated: slideWidth=${this.slideWidth}`);
     },
     /**
@@ -71,19 +71,19 @@ function B(t, o, a) {
      * @param {number} index
      */
     getCoordinate(e) {
-      const { gap: s } = t.options;
-      return e * (this.slideWidth + s) - this.getOffset();
+      const { gap: a } = t.options;
+      return e * (this.slideWidth + a) - this.getOffset();
     },
     /**
      * Get the offset based on focusAt setting.
      */
     getOffset() {
-      const { focusAt: e, gap: s } = t.options, { Html: i } = o;
-      return e === "center" ? i.root.offsetWidth / 2 - this.slideWidth / 2 : typeof e == "number" ? e * (this.slideWidth + s) : 0;
+      const { focusAt: e, gap: a } = t.options, { Html: i } = o;
+      return e === "center" ? i.root.offsetWidth / 2 - this.slideWidth / 2 : typeof e == "number" ? e * (this.slideWidth + a) : 0;
     }
   };
 }
-function F(t, o, a) {
+function F(t, o, s) {
   return {
     /**
      * GSAP Timeline or Tween reference
@@ -93,7 +93,7 @@ function F(t, o, a) {
       this.bind();
     },
     bind() {
-      a.on("resize", () => {
+      s.on("resize", () => {
         this.to(t.state.index, { duration: 0 });
       });
     },
@@ -102,28 +102,28 @@ function F(t, o, a) {
      * @param {number} index 
      * @param {Object} options 
      */
-    to(e, s = {}) {
-      const { Track: i, Html: n } = o, { animationDuration: r, animationEase: l, type: h } = t.options, p = s.duration !== void 0 ? s.duration : r / 1e3, u = s.ease || l;
+    to(e, a = {}) {
+      const { Track: i, Html: n } = o, { animationDuration: c, animationEase: l, type: h } = t.options, g = a.duration !== void 0 ? a.duration : c / 1e3, u = a.ease || l;
       if (this.tween && this.tween.kill(), (h === "fade" || h === "fan") && t.options.loop) {
-        const g = n.slides.length;
-        e >= g && (e = 0), e < 0 && (e = g - 1);
+        const v = n.slides.length;
+        e >= v && (e = 0), e < 0 && (e = v - 1);
       }
-      if (t.state.index = e, t.state.animationDuration = p, h === "fade" || h === "fan") {
-        a.emit("move", { x: 0 }), a.emit("move.after", { index: t.state.index });
+      if (t.state.index = e, t.state.animationDuration = g, h === "fade" || h === "fan") {
+        s.emit("move", { x: 0 }), s.emit("move.after", { index: t.state.index });
         return;
       }
       const w = i.getCoordinate(e);
       this.tween = d.to(n.track, {
         x: -w,
-        duration: p,
+        duration: g,
         ease: u,
         onUpdate: () => {
-          a.emit("move", { x: d.getProperty(n.track, "x") });
+          s.emit("move", { x: d.getProperty(n.track, "x") });
         },
         onComplete: () => {
           t.state.animationDuration = 0;
-          let g = !1;
-          t.options.loop && (g = this.loop(t.state.index)), g || a.emit("move.after", { index: t.state.index });
+          let v = !1;
+          t.options.loop && (v = this.loop(t.state.index)), v || s.emit("move.after", { index: t.state.index });
         }
       });
     },
@@ -132,62 +132,62 @@ function F(t, o, a) {
      * Returns true if a jump occurred.
      */
     loop(e) {
-      const { Track: s, Html: i } = o, n = t.clonesCount || 0, l = i.slides.length - n * 2, h = 1e-3;
+      const { Track: a, Html: i } = o, n = t.clonesCount || 0, l = i.slides.length - n * 2, h = 1e-3;
       return e < n - h ? (this.jump(e + l), !0) : e > l + n - 1 + h ? (this.jump(e - l), !0) : !1;
     },
     /**
      * Jump to an index without animation.
      */
     jump(e) {
-      const { Track: s, Html: i } = o, { type: n } = t.options;
+      const { Track: a, Html: i } = o, { type: n } = t.options;
       if (t.state.index = e, n === "fade" || n === "fan") {
-        a.emit("move", { x: 0, jump: !0 }), a.emit("move.after", { index: e });
+        s.emit("move", { x: 0, jump: !0 }), s.emit("move.after", { index: e });
         return;
       }
-      const r = s.getCoordinate(e);
-      d.set(i.track, { x: -r }), a.emit("move", { x: -r, jump: !0 }), a.emit("move.after", { index: e });
+      const c = a.getCoordinate(e);
+      d.set(i.track, { x: -c }), s.emit("move", { x: -c, jump: !0 }), s.emit("move.after", { index: e });
     }
   };
 }
-function Y(t, o, a) {
+function Y(t, o, s) {
   return {
     draggable: null,
     mount() {
       this.init();
     },
     init() {
-      d.registerPlugin(O);
-      const { Html: e, Move: s } = o, i = t.options.type === "fan", n = t.options.type === "fade";
-      this.draggable = O.create(e.track, {
-        type: i ? "x,y" : "x",
+      d.registerPlugin(I);
+      const { Html: e, Move: a, Track: i } = o, n = t.options.type === "fan", c = t.options.type === "fade";
+      this.draggable = I.create(e.track, {
+        type: n ? "x,y" : "x",
         trigger: e.root,
         edgeResistance: 0.65,
         inertia: !0,
         onDragStart: () => {
-          t.state.isDragging = !0, s.tween && s.tween.kill(), a.emit("drag.start");
+          t.state.isDragging = !0, a.tween && a.tween.kill(), s.emit("drag.start");
         },
         onDrag: function() {
-          const r = t.options.swipeThreshold || 80;
-          if (n || i) {
-            if (Math.sqrt(this.x * this.x + this.y * this.y) > r * 3) {
+          const l = t.options.swipeThreshold || 80;
+          if (c || n) {
+            if (Math.sqrt(this.x * this.x + this.y * this.y) > l * 3) {
               this.endDrag();
               return;
             }
-            d.set(e.track, { x: 0, y: 0 }), a.emit("drag", { x: this.x, y: this.y });
+            d.set(e.track, { x: 0, y: 0 }), s.emit("drag", { x: this.x, y: this.y });
             return;
           }
-          a.emit("drag", { x: this.x });
+          s.emit("drag", { x: this.x });
         },
         onDragEnd: function() {
-          if (t.state.isDragging = !1, n || i) {
+          if (t.state.isDragging = !1, c || n) {
             d.set(e.track, { x: 0, y: 0 });
-            const u = t.options.swipeThreshold || 80;
-            Math.sqrt(this.x * this.x + this.y * this.y) > u ? i ? this.x > 0 ? s.to(t.state.index - 1) : s.to(t.state.index + 1) : this.getDirection() === "left" ? s.to(t.state.index + 1) : this.getDirection() === "right" && s.to(t.state.index - 1) : a.emit("move", { x: 0 }), a.emit("drag.end");
+            const w = t.options.swipeThreshold || 80;
+            Math.sqrt(this.x * this.x + this.y * this.y) > w ? n ? this.x > 0 ? a.to(t.state.index - 1) : a.to(t.state.index + 1) : this.getDirection() === "left" ? a.to(t.state.index + 1) : this.getDirection() === "right" && a.to(t.state.index - 1) : s.emit("move", { x: 0 }), s.emit("drag.end");
             return;
           }
-          const r = this.x, l = Track.slideWidth + t.options.gap, h = Track.getOffset();
-          let p = Math.round((h - r) / l);
-          t.options.loop || (p = Math.max(0, Math.min(p, e.slides.length - 1))), s.to(p);
+          const l = this.x, h = i.slideWidth + t.options.gap, g = i.getOffset();
+          let u = Math.round((g - l) / h);
+          t.options.loop || (u = Math.max(0, Math.min(u, e.slides.length - 1))), a.to(u);
         }
       })[0];
     },
@@ -199,7 +199,7 @@ function Y(t, o, a) {
     }
   };
 }
-function N(t, o, a) {
+function N(t, o, s) {
   return {
     items: [],
     mount() {
@@ -211,41 +211,41 @@ function N(t, o, a) {
     },
     run() {
       this.remove();
-      const { Html: e } = o, { perView: s, breakpoints: i } = t.options;
-      let n = s;
+      const { Html: e } = o, { perView: a, breakpoints: i } = t.options;
+      let n = a;
       i && Object.values(i).forEach((u) => {
         u.perView > n && (n = u.perView);
       });
-      const r = Math.ceil(n), l = e.slides;
-      t.clonesCount = r;
-      const h = l.slice(0, r).map((u) => u.cloneNode(!0));
-      l.slice(-r).map((u) => u.cloneNode(!0)).reverse().forEach((u) => {
+      const c = Math.ceil(n), l = e.slides;
+      t.clonesCount = c;
+      const h = l.slice(0, c).map((u) => u.cloneNode(!0));
+      l.slice(-c).map((u) => u.cloneNode(!0)).reverse().forEach((u) => {
         u.classList.add("tka-slider__slide--clone"), e.track.insertBefore(u, e.track.firstChild);
       }), h.forEach((u) => {
         u.classList.add("tka-slider__slide--clone"), e.track.appendChild(u);
-      }), o.Html.collectSlides(), o.Track.calculate(), t.state.index += r, t.log(`Cloned ${r} slides on each side.`);
+      }), o.Html.collectSlides(), o.Track.calculate(), t.state.index += c, t.log(`Cloned ${c} slides on each side.`);
     }
   };
 }
-function G(t, o, a) {
+function G(t, o, s) {
   return {
     mount() {
       this.bind(), this.update();
     },
     bind() {
-      a.on("move.after", () => {
+      s.on("move.after", () => {
         this.update();
       });
     },
     update() {
-      const { Html: e } = o, { index: s } = t.state;
+      const { Html: e } = o, { index: a } = t.state;
       e.slides.forEach((i, n) => {
-        n === s ? i.classList.contains("is-active") || (i.classList.add("is-active"), a.emit("slide.active", { index: n, slide: i })) : i.classList.contains("is-active") && (i.classList.remove("is-active"), a.emit("slide.inactive", { index: n, slide: i }));
+        n === a ? i.classList.contains("is-active") || (i.classList.add("is-active"), s.emit("slide.active", { index: n, slide: i })) : i.classList.contains("is-active") && (i.classList.remove("is-active"), s.emit("slide.inactive", { index: n, slide: i }));
       });
     }
   };
 }
-function Z(t, o, a) {
+function Z(t, o, s) {
   return {
     interval: null,
     mount() {
@@ -253,7 +253,7 @@ function Z(t, o, a) {
     },
     bind() {
       const { Html: e } = o;
-      t.options.hoverPause && (e.root.addEventListener("mouseenter", () => this.stop()), e.root.addEventListener("mouseleave", () => this.start())), a.on("drag.start", () => this.stop()), a.on("drag.end", () => {
+      t.options.hoverPause && (e.root.addEventListener("mouseenter", () => this.stop()), e.root.addEventListener("mouseleave", () => this.start())), s.on("drag.start", () => this.stop()), s.on("drag.end", () => {
         t.options.autoplay && this.start();
       });
     },
@@ -268,7 +268,7 @@ function Z(t, o, a) {
     }
   };
 }
-function K(t, o, a) {
+function K(t, o, s) {
   return {
     prevItems: [],
     nextItems: [],
@@ -279,25 +279,25 @@ function K(t, o, a) {
       const { Html: e } = o;
       e.root.querySelectorAll("[data-tka-control]").forEach((i) => {
         const n = i.getAttribute("data-tka-control");
-        i.addEventListener("click", (r) => {
-          r.preventDefault(), this.move(n);
+        i.addEventListener("click", (c) => {
+          c.preventDefault(), this.move(n);
         }), n === "<" && this.prevItems.push(i), n === ">" && this.nextItems.push(i);
       });
     },
     move(e) {
-      const { Move: s } = o, { index: i } = t.state;
+      const { Move: a } = o, { index: i } = t.state;
       if (e === ">")
-        s.to(i + 1);
+        a.to(i + 1);
       else if (e === "<")
-        s.to(i - 1);
+        a.to(i - 1);
       else if (e.startsWith("=")) {
-        const n = parseInt(e.substring(1));
-        s.to(n);
+        let n = parseInt(e.substring(1));
+        t.options.loop && t.options.type === "slide" && (n += t.clonesCount || 0), a.to(n);
       }
     }
   };
 }
-function U(t, o, a) {
+function U(t, o, s) {
   return {
     wrapper: null,
     items: [],
@@ -305,48 +305,48 @@ function U(t, o, a) {
       this.bind(), this.render();
     },
     bind() {
-      a.on("move.after", () => {
+      s.on("move.after", () => {
         this.active();
-      }), a.on("mount.after", () => {
+      }), s.on("mount.after", () => {
         this.render();
       });
     },
     render() {
-      const { Html: e } = o, { perView: s, loop: i } = t.options;
+      const { Html: e } = o, { perView: a, loop: i } = t.options;
       if (this.wrapper = e.root.querySelector("[data-tka-bullets]"), !this.wrapper) return;
       this.wrapper.innerHTML = "", this.items = [];
       const n = i ? e.slides.length - t.clonesCount * 2 : e.slides.length;
-      for (let r = 0; r < n; r++) {
+      for (let c = 0; c < n; c++) {
         const l = document.createElement("button");
-        l.className = "tka-bullet", l.setAttribute("data-tka-bullet", r), l.addEventListener("click", (h) => {
+        l.className = "tka-bullet", l.setAttribute("data-tka-bullet", c), l.addEventListener("click", (h) => {
           h.preventDefault();
-          const p = i ? r + t.clonesCount : r;
-          o.Move.to(p);
+          const g = i ? c + t.clonesCount : c;
+          o.Move.to(g);
         }), this.wrapper.appendChild(l), this.items.push(l);
       }
       this.active();
     },
     active() {
       if (!this.wrapper) return;
-      const { loop: e } = t.options, { index: s } = t.state;
-      let i = s;
+      const { loop: e } = t.options, { index: a } = t.state;
+      let i = a;
       if (e) {
         const n = o.Html.slides.length - t.clonesCount * 2;
-        i = (s - t.clonesCount) % n, i < 0 && (i += n);
+        i = (a - t.clonesCount) % n, i < 0 && (i += n);
       }
-      this.items.forEach((n, r) => {
-        r === i ? n.classList.add("is-active") : n.classList.remove("is-active");
+      this.items.forEach((n, c) => {
+        c === i ? n.classList.add("is-active") : n.classList.remove("is-active");
       });
     }
   };
 }
-function J(t, o, a) {
+function J(t, o, s) {
   return {
     isRevealed: !1,
     mount() {
       this.bind();
-      const { type: e, revealOnMount: s } = t.options;
-      s ? (this.isRevealed = !0, setTimeout(() => this.reveal(), 50)) : (this.isRevealed = !1, setTimeout(() => {
+      const { type: e, revealOnMount: a } = t.options;
+      a ? (this.isRevealed = !0, setTimeout(() => this.reveal(), 50)) : (this.isRevealed = !1, setTimeout(() => {
         this.update(d.getProperty(o.Html.track, "x"), !0);
       }, 10));
     },
@@ -354,8 +354,8 @@ function J(t, o, a) {
       const { type: e } = t.options;
       if (this.isRevealed = !0, e === "fan") {
         this.update(0, !0);
-        const s = o.Html.slides.map((i) => i.querySelector(".demo-slide")).filter(Boolean);
-        d.from(s, {
+        const a = o.Html.slides.map((i) => i.querySelector(".demo-slide") || i.children[0]).filter(Boolean);
+        d.from(a, {
           y: 100,
           rotation: 0,
           opacity: 0,
@@ -369,66 +369,79 @@ function J(t, o, a) {
         this.update(d.getProperty(o.Html.track, "x"), !0);
     },
     bind() {
-      a.on("move", ({ x: e, jump: s }) => {
-        this.update(e, s);
-      }), a.on("drag", ({ x: e, y: s }) => {
-        this.update(e, !1, s);
-      }), a.on("resize", () => {
+      s.on("move", ({ x: e, jump: a }) => {
+        this.update(e, a);
+      }), s.on("drag", ({ x: e, y: a }) => {
+        this.update(e, !1, a);
+      }), s.on("resize", () => {
         this.update(d.getProperty(o.Html.track, "x"), !0);
       });
     },
-    update(e, s = !1, i = 0) {
-      const { Html: n, Track: r } = o, {
+    update(e, a = !1, i = 0) {
+      const { Html: n, Track: c } = o, {
         type: l,
         scaleOnCenter: h,
-        scaleAmount: p,
+        scaleAmount: g,
         scaleRange: u,
         gap: w,
-        animationEase: g
-      } = t.options, C = r.slideWidth + w, j = s ? 0 : t.state.animationDuration || 0;
-      n.slides.forEach((T, E) => {
-        const A = T.querySelector(".demo-slide");
-        if (!A) return;
-        let b, D, m = E - t.state.index;
-        const x = n.slides.length;
-        t.options.loop && (l === "fade" || l === "fan") && (m = (E - t.state.index) % x, m > x / 2 && (m -= x), m < -x / 2 && (m += x));
-        const M = Math.abs(m);
+        animationEase: v
+      } = t.options, j = c.slideWidth + w, q = a ? 0 : t.state.animationDuration || 0;
+      n.slides.forEach((E, L) => {
+        let M = E.querySelector(".demo-slide") || E.children[0];
+        if (!M) return;
+        let S, W, m = L - t.state.index;
+        const T = n.slides.length;
+        t.options.loop && (l === "fade" || l === "fan") && (m = (L - t.state.index) % T, m > T / 2 && (m -= T), m < -T / 2 && (m += T));
+        const _ = Math.abs(m);
         if (l === "fade" || l === "fan")
-          b = M, D = m;
+          S = _, W = m;
         else {
-          const y = r.getCoordinate(E), S = e + y;
-          b = Math.abs(S) / C, D = S / C;
+          const p = c.getCoordinate(L), x = e + p;
+          S = Math.abs(x) / j, W = x / j;
         }
-        let v = 1;
+        let y = 1;
         if (h) {
-          const y = u || 1;
-          v = 1 - Math.min(b, y) / y * (1 - p), v = Math.max(p, Math.min(1, v));
+          const p = u || 1;
+          y = 1 - Math.min(S, p) / p * (1 - g), y = Math.max(g, Math.min(1, y));
         }
-        const c = { overwrite: !0 };
+        const r = { overwrite: !0 };
         if (l === "coverflow")
-          c.rotationY = D * -30, c.z = b * -100, c.opacity = this.isRevealed ? 1 - Math.min(b, 2) * 0.2 : 0, c.scale = v;
-        else if (l === "fade" || l === "fan") {
+          r.rotationY = W * -30, r.z = S * -100, r.opacity = this.isRevealed ? 1 - Math.min(S, 2) * 0.2 : 0, r.scale = y;
+        else if (l === "360") {
+          const p = M.querySelector(".tka-360-container") || M, x = Array.from(p.children).filter(
+            (k) => k.classList.contains("tka-360-frame") || p.children.length > 1
+          ), A = x.length;
+          if (A > 1) {
+            const k = t.options.rotationSpeed || 1;
+            let b = Math.round(-W * k) % A;
+            b < 0 && (b += A), p._tka_last_frame !== b && (x.forEach((D, O) => {
+              const C = O === b;
+              D.style.opacity = C ? "1" : "0", D.style.visibility = C ? "visible" : "hidden", D.style.zIndex = C ? "2" : "1";
+            }), p._tka_last_frame = b);
+          }
+          r.scale = y, r.opacity = this.isRevealed ? 1 : 0, r.x = 0, r.y = 0, r.rotationY = 0;
+        } else if (l === "fade" || l === "fan") {
           if (l === "fade")
-            c.opacity = this.isRevealed ? Math.max(0, 1 - M) : 0, c.scale = v, c.z = 0, c.x = 0, c.y = 0, c.rotation = 0;
+            r.opacity = this.isRevealed ? Math.max(0, 1 - _) : 0, r.scale = y, r.z = 0, r.x = 0, r.y = 0, r.rotation = 0;
           else if (l === "fan") {
-            const y = t.options.rotateFactor || 15, S = t.options.scaleFactor || 0.1, I = t.options.fanTranslateY || 5, L = t.options.fanSpace || 160, W = t.options.fanTilt || 15, _ = t.options.fanTranslateZ || -100, z = t.options.activeRotation || 0, P = t.options.activeScale !== void 0 ? t.options.activeScale : 1, q = t.options.activeTranslateY || 0;
+            const p = t.options.rotateFactor || 15, x = t.options.scaleFactor || 0.1, A = t.options.fanTranslateY || 5, k = t.options.fanSpace || 160, b = t.options.fanTilt || 15, D = t.options.fanTranslateZ || -100, O = t.options.activeRotation || 0, C = t.options.activeScale !== void 0 ? t.options.activeScale : 1, P = t.options.activeTranslateY || 0;
             if (m === 0)
-              c.rotation = (t.state.isDragging ? e / 15 : 0) + z, c.rotationY = t.state.isDragging ? e / 8 : 0, c.rotationX = t.state.isDragging ? -i / 8 : 0, c.x = e, c.y = i + q, c.opacity = this.isRevealed ? 1 : 0, c.scale = P, c.z = 150;
-            else if (M === 1) {
-              const H = m === 1, k = t.state.isDragging ? 0.2 : 0;
-              c.scale = 1 - S, c.y = I + i * k, c.opacity = this.isRevealed ? 0.9 : 0, c.z = _, c.rotationX = -5 + i / 20 * k, c.x = (H ? L : -L) + e * k, c.rotation = (H ? y : -y) + e / 10 * k, c.rotationY = (H ? W : -W) + e / 20 * k;
+              r.rotation = (t.state.isDragging ? e / 15 : 0) + O, r.rotationY = t.state.isDragging ? e / 8 : 0, r.rotationX = t.state.isDragging ? -i / 8 : 0, r.x = e, r.y = i + P, r.opacity = this.isRevealed ? 1 : 0, r.scale = C, r.z = 150;
+            else if (_ === 1) {
+              const R = m === 1, H = t.state.isDragging ? 0.2 : 0;
+              r.scale = 1 - x, r.y = A + i * H, r.opacity = this.isRevealed ? 0.9 : 0, r.z = D, r.rotationX = -5 + i / 20 * H, r.x = (R ? k : -k) + e * H, r.rotation = (R ? p : -p) + e / 10 * H, r.rotationY = (R ? b : -b) + e / 20 * H;
             } else
-              c.opacity = 0, c.z = -300, c.scale = 0.5, c.x = (m > 0 ? 1 : -1) * 300, c.y = 0;
-            c.ease = t.options.fanEase || "power2.out", T.style.zIndex = m === 0 ? 20 : 10 - M;
+              r.opacity = 0, r.z = -300, r.scale = 0.5, r.x = (m > 0 ? 1 : -1) * 300, r.y = 0;
+            r.ease = t.options.fanEase || "power2.out", E.style.zIndex = m === 0 ? 20 : 10 - _;
           }
         } else
-          c.scale = v, c.opacity = this.isRevealed ? h && v < 1 ? 0.6 : 1 : 0, c.rotationY = 0, c.z = 0, c.rotation = 0, c.x = 0, c.y = 0;
-        E === t.state.index ? T.classList.add("is-active") : T.classList.remove("is-active"), c.duration = j, c.ease || (c.ease = g), s ? d.set(A, c) : d.to(A, c);
+          r.scale = y, r.opacity = this.isRevealed ? h && y < 1 ? 0.6 : 1 : 0, r.rotationY = 0, r.z = 0, r.rotation = 0, r.x = 0, r.y = 0;
+        L === t.state.index ? E.classList.add("is-active") : E.classList.remove("is-active"), r.duration = q, r.ease || (r.ease = v), a ? d.set(M, r) : d.to(M, r);
       });
     }
   };
 }
-function Q(t, o, a) {
+function Q(t, o, s) {
   return {
     originalOptions: null,
     mount() {
@@ -442,49 +455,49 @@ function Q(t, o, a) {
     check() {
       const { breakpoints: e } = this.originalOptions;
       if (!e || Object.keys(e).length === 0) return;
-      const s = window.innerWidth;
+      const a = window.innerWidth;
       let i = null;
       const n = Object.keys(e).map(Number).sort((l, h) => h - l);
       for (const l of n)
-        s <= l && (i = e[l]);
-      const r = i ? Object.assign({}, this.originalOptions, i) : this.originalOptions;
-      (r.perView !== t.options.perView || r.gap !== t.options.gap || r.focusAt !== t.options.focusAt) && this.apply(r);
+        a <= l && (i = e[l]);
+      const c = i ? Object.assign({}, this.originalOptions, i) : this.originalOptions;
+      (c.perView !== t.options.perView || c.gap !== t.options.gap || c.focusAt !== t.options.focusAt) && this.apply(c);
     },
     apply(e) {
-      t.log("Applying breakpoint options:", e), t.options = Object.assign(t.options, e), o.Track && o.Track.calculate(), o.Clones, o.Move && o.Move.jump(t.state.index), a.emit("breakpoint.change", e);
+      t.log("Applying breakpoint options:", e), t.options = Object.assign(t.options, e), o.Track && o.Track.calculate(), o.Clones, o.Move && o.Move.jump(t.state.index), s.emit("breakpoint.change", e);
     }
   };
 }
-function X(t, o, a) {
+function X(t, o, s) {
   return {
     mount() {
       this.applyLabels(), t.options.keyboard && this.bind();
     },
     bind() {
       const { Html: e } = o;
-      e.root.setAttribute("tabindex", "0"), e.root.addEventListener("keydown", (s) => {
+      e.root.setAttribute("tabindex", "0"), e.root.addEventListener("keydown", (a) => {
         const { Move: i } = o;
-        s.key === "ArrowRight" ? i.to(t.state.index + 1) : s.key === "ArrowLeft" && i.to(t.state.index - 1);
+        a.key === "ArrowRight" ? i.to(t.state.index + 1) : a.key === "ArrowLeft" && i.to(t.state.index - 1);
       });
     },
     applyLabels() {
-      const { Html: e } = o, { loop: s } = t.options, i = t.clonesCount || 0;
-      e.root.setAttribute("role", "region"), e.root.setAttribute("aria-label", "Image Slider"), e.track.setAttribute("role", "list"), e.slides.forEach((n, r) => {
-        let l = r;
-        if (s) {
+      const { Html: e } = o, { loop: a } = t.options, i = t.clonesCount || 0;
+      e.root.setAttribute("role", "region"), e.root.setAttribute("aria-label", "Image Slider"), e.track.setAttribute("role", "list"), e.slides.forEach((n, c) => {
+        let l = c;
+        if (a) {
           const h = e.slides.length - i * 2;
-          l = (r - i) % h, l < 0 && (l += h);
+          l = (c - i) % h, l < 0 && (l += h);
         }
         n.setAttribute("role", "listitem"), n.setAttribute("aria-label", `Slide ${l + 1}`);
-      }), a.on("move.after", ({ index: n }) => {
-        e.slides.forEach((r, l) => {
-          l === n ? r.setAttribute("aria-hidden", "false") : r.setAttribute("aria-hidden", "true");
+      }), s.on("move.after", ({ index: n }) => {
+        e.slides.forEach((c, l) => {
+          l === n ? c.setAttribute("aria-hidden", "false") : c.setAttribute("aria-hidden", "true");
         });
       });
     }
   };
 }
-function tt(t, o, a) {
+function tt(t, o, s) {
   return {
     el: null,
     mount() {
@@ -493,13 +506,13 @@ function tt(t, o, a) {
       this.el = typeof t.options.pagination == "string" ? e.root.querySelector(t.options.pagination) : e.root.querySelector("[data-tka-pagination]"), this.el && (this.bind(), this.update());
     },
     bind() {
-      a.on("move.after", () => this.update());
+      s.on("move.after", () => this.update());
     },
     update() {
       if (!this.el) return;
-      const { Html: e } = o, { perView: s, loop: i } = t.options, n = i ? e.slides.length - t.clonesCount * 2 : e.slides.length;
-      let r = t.state.index;
-      i && (r = (t.state.index - t.clonesCount) % n, r < 0 && (r += n)), this.el.innerText = `${r + 1} / ${n}`;
+      const { Html: e } = o, { perView: a, loop: i } = t.options, n = i ? e.slides.length - t.clonesCount * 2 : e.slides.length;
+      let c = t.state.index;
+      i && (c = (t.state.index - t.clonesCount) % n, c < 0 && (c += n)), this.el.innerText = `${c + 1} / ${n}`;
     }
   };
 }
@@ -518,9 +531,9 @@ const et = {
   A11y: X,
   Pagination: tt
 };
-class R {
-  constructor(o, a = {}) {
-    this.selector = o, this.options = Object.assign(R.defaults, a), this.events = new V(), this.state = {
+class z {
+  constructor(o, s = {}) {
+    this.selector = o, this.options = Object.assign(z.defaults, s), this.events = new V(), this.state = {
       index: 0,
       isDragging: !1,
       animationDuration: 0
@@ -599,8 +612,8 @@ class R {
   register(o) {
     return this.options.components = Object.assign({}, this.options.components, o), this;
   }
-  on(o, a) {
-    return this.events.on(o, a);
+  on(o, s) {
+    return this.events.on(o, s);
   }
   /**
    * Reveal the slider (trigger entrance animation)
@@ -608,7 +621,32 @@ class R {
   reveal() {
     return this.components.Effects && this.components.Effects.reveal && this.components.Effects.reveal(), this;
   }
+  /**
+   * Programmatically move the slider to a specific slide or direction.
+   * Supports:
+   * - Number: logical index (e.g. 2 for 3rd slide)
+   * - Pattern: '>', '<', '=2' (for logical index 2)
+   * 
+   * @param {string|number} pattern 
+   * @returns {this}
+   */
+  go(o) {
+    if (this.components.Controls) {
+      const s = typeof o == "number" ? `=${o}` : o;
+      this.components.Controls.move(s);
+    }
+    return this;
+  }
+  /**
+   * Instantly jump to a specific logical index without animation.
+   * @param {number} index 
+   * @returns {this}
+   */
+  jump(o) {
+    let s = o;
+    return this.options.loop && this.options.type === "slide" && (s += this.clonesCount || 0), this.components.Move && this.components.Move.jump(s), this;
+  }
 }
 export {
-  R as default
+  z as default
 };

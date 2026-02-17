@@ -153,6 +153,35 @@
             background: var(--primary-color);
             border-color: var(--primary-color);
         }
+
+        /* 360 Degree Specifics */
+        .tka-360-container {
+            position: relative;
+            width: 100%;
+            height: 300px;
+            background: #1e293b;
+            border-radius: 16px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .tka-360-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1e293b;
+        }
     </style>
     <link rel="stylesheet" href="dist/tka-slider-carousel.css">
 </head>
@@ -359,37 +388,35 @@
             <h2>7. API: Methods & Events</h2>
             <div class="description">Listen to slider state changes or control it from external code.</div>
 
-            <div style="display: grid; grid-template-columns: 1fr 300px; gap: 40px; align-items: start;">
-                <div class="slider-instance-wrapper">
-                    <div class="tka-slider" id="slider-api">
-                        <div class="tka-slider__track">
-                            <div class="tka-slider__slide">
-                                <div class="demo-slide color-1" style="height: 250px;">Slide 0</div>
-                            </div>
-                            <div class="tka-slider__slide">
-                                <div class="demo-slide color-2" style="height: 250px;">Slide 1</div>
-                            </div>
-                            <div class="tka-slider__slide">
-                                <div class="demo-slide color-3" style="height: 250px;">Slide 2</div>
-                            </div>
+            <div class="slider-instance-wrapper">
+                <div class="tka-slider" id="slider-api">
+                    <div class="tka-slider__track">
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-1">Slide 0</div>
                         </div>
-                    </div>
-
-                    <div style="margin-top: 30px; display: flex; gap: 10px; flex-wrap: wrap;">
-                        <button class="api-btn" onclick="window.apiSlider.go('<')">Prev</button>
-                        <button class="api-btn" onclick="window.apiSlider.go('>')">Next</button>
-                        <button class="api-btn" onclick="window.apiSlider.go(0)">Go to 0</button>
-                        <button class="api-btn" onclick="window.apiSlider.go(2)">Go to 2</button>
-                        <button class="api-btn" onclick="window.apiSlider.jump(1)">Instant Jump to 1</button>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-2">Slide 1</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-3">Slide 2</div>
+                        </div>
                     </div>
                 </div>
 
-                <div style="background: #fff; padding: 30px; border-radius: 20px; border: 1px solid #e2e8f0;">
-                    <h3 style="margin-top: 0;">Event Log</h3>
-                    <div id="event-log"
-                        style="font-family: monospace; font-size: 13px; height: 300px; overflow-y: auto; background: #f1f5f9; padding: 15px; border-radius: 10px;">
-                        <div style="color: #64748b;">Waiting for interaction...</div>
-                    </div>
+                <div style="margin-top: 30px; display: flex; gap: 10px; flex-wrap: wrap;">
+                    <button class="api-btn" onclick="window.apiSlider.go('<')">Prev</button>
+                    <button class="api-btn" onclick="window.apiSlider.go('>')">Next</button>
+                    <button class="api-btn" onclick="window.apiSlider.go(0)">Go to 0</button>
+                    <button class="api-btn" onclick="window.apiSlider.go(2)">Go to 2</button>
+                    <button class="api-btn" onclick="window.apiSlider.jump(1)">Instant Jump to 1</button>
+                </div>
+            </div>
+
+            <div style="background: #fff; padding: 30px; border-radius: 20px; border: 1px solid #e2e8f0;">
+                <h3 style="margin-top: 0;">Event Log</h3>
+                <div id="event-log"
+                    style="font-family: monospace; font-size: 13px; height: 300px; overflow-y: auto; background: #f1f5f9; padding: 15px; border-radius: 10px;">
+                    <div style="color: #64748b;">Waiting for interaction...</div>
                 </div>
             </div>
 
@@ -426,7 +453,181 @@
                     font-weight: 600;
                 }
             </style>
-        </section>
+            <!-- 8. HERO FADE WITH NAVIGATION -->
+            <section id="demo-hero">
+                <h2>8. Hero Fade with Navigation</h2>
+                <div class="description">A common website header pattern. Single slide, smooth cross-fade, and standard
+                    arrows/bullets.</div>
+                <div class="demo-info">type: 'fade',
+                    perView: 1,
+                    loop: true,
+                    pagination: true</div>
+                <div class="slider-instance-wrapper">
+                    <div class="tka-slider" id="slider-hero">
+                        <div class="tka-slider__track">
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide color-1">Premium Performance</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide color-4">Modern Aesthetic</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide color-5">GSAP Engine</div>
+                            </div>
+                        </div>
+                        <div class="tka-controls">
+                            <button data-tka-control="<">PREV</button>
+                            <button data-tka-control=">">NEXT</button>
+                        </div>
+                        <div class="tka-bullets" data-tka-bullets></div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 9. TILTED 3D STACK -->
+            <section id="demo-fan-tilt">
+                <h2>9. Tilted 3D Stack</h2>
+                <div class="description">An aggressive 3D fan variant using experimental tilt and depth options.</div>
+                <div class="demo-info">type: 'fan',
+                    rotateFactor: 35,
+                    fanTilt: 45,
+                    fanTranslateZ: -200,
+                    fanSpace: 120</div>
+                <div class="fan-instance-wrapper">
+                    <div class="tka-slider" id="slider-fan-tilt">
+                        <div class="tka-slider__track">
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide color-6">Tilt Alpha</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide color-1">Tilt Beta</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide color-2">Tilt Gamma</div>
+                            </div>
+                        </div>
+                        <div class="tka-controls">
+                            <button data-tka-control="<">←</button>
+                            <button data-tka-control=">">→</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- 10. CINEMATIC DEPTH ZOOM -->
+                <section id="demo-zoom">
+                    <h2>10. Cinematic Depth Zoom</h2>
+                    <div class="description">An immersive effect where slides zoom in from the background. Perfect for
+                        storytelling.</div>
+                    <div class="demo-info">type: 'slide',
+                        perView: 1.5,
+                        focusAt: 'center',
+                        scaleOnCenter: true,
+                        scaleAmount: 0.3,
+                        scaleGradual: true</div>
+                    <div class="slider-instance-wrapper" style="background: #000; overflow: hidden;">
+                        <div class="tka-slider" id="slider-zoom">
+                            <div class="tka-slider__track">
+                                <div class="tka-slider__slide">
+                                    <div class="demo-slide"
+                                        style="background: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?auto=format&fit=crop&q=80&w=800'); background-size: cover; color: white; border: none;">
+                                        Nature</div>
+                                </div>
+                                <div class="tka-slider__slide">
+                                    <div class="demo-slide"
+                                        style="background: url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&q=80&w=800'); background-size: cover; color: white; border: none;">
+                                        Forest</div>
+                                </div>
+                                <div class="tka-slider__slide">
+                                    <div class="demo-slide"
+                                        style="background: url('https://images.unsplash.com/photo-1501854140801-50d01698950b?auto=format&fit=crop&q=80&w=800'); background-size: cover; color: white; border: none;">
+                                        Valley</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 11. GLASS PERSPECTIVE -->
+                <section id="demo-glass">
+                    <h2>11. Glass Perspective</h2>
+                    <div class="description">Combining glassmorphism with 3D coverflow for a high-end futuristic feel.
+                    </div>
+                    <div class="demo-info">type: 'coverflow',
+                        perView: 3,
+                        focusAt: 'center',
+                        gap: -40</div>
+                    <div class="slider-instance-wrapper"
+                        style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 100px 40px;">
+                        <div class="tka-slider" id="slider-glass">
+                            <div class="tka-slider__track">
+                                <div class="tka-slider__slide">
+                                    <div class="demo-slide glass-card">Card 1</div>
+                                </div>
+                                <div class="tka-slider__slide">
+                                    <div class="demo-slide glass-card">Card 2</div>
+                                </div>
+                                <div class="tka-slider__slide">
+                                    <div class="demo-slide glass-card">Card 3</div>
+                                </div>
+                                <div class="tka-slider__slide">
+                                    <div class="demo-slide glass-card">Card 4</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <style>
+                        .glass-card {
+                            background: rgba(255, 255, 255, 0.05) !important;
+                            backdrop-filter: blur(10px);
+                            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+                            color: white !important;
+                            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+                        }
+                    </style>
+                </section>
+
+                <!-- 12. 360 DEGREE OBJECT ROTATION -->
+                <section id="demo-360">
+                    <h2>12. 360° Object Rotation</h2>
+                    <div class="description">Interactive object rotation mapped to slide position. Drag to rotate!</div>
+                    <div class="demo-info">type: '360',
+                        perView: 3,
+                        focusAt: 'center',
+                        rotationSpeed: 2</div>
+                    <div class="slider-instance-wrapper" style="background: #0f172a;">
+                        <div class="tka-slider" id="slider-360">
+                            <div class="tka-slider__track">
+                                <div class="tka-slider__slide">
+                                    <div class="tka-360-container">
+                                        <div class="tka-360-frame" style="background: #3b82f6;">Car A - Front</div>
+                                        <div class="tka-360-frame" style="background: #3b82f6;">Car A - 45°</div>
+                                        <div class="tka-360-frame" style="background: #3b82f6;">Car A - Side</div>
+                                        <div class="tka-360-frame" style="background: #3b82f6;">Car A - Back</div>
+                                    </div>
+                                </div>
+                                <div class="tka-slider__slide">
+                                    <div class="tka-360-container">
+                                        <div class="tka-360-frame" style="background: #10b981;">Car B - Front</div>
+                                        <div class="tka-360-frame" style="background: #10b981;">Car B - 45°</div>
+                                        <div class="tka-360-frame" style="background: #10b981;">Car B - Side</div>
+                                        <div class="tka-360-frame" style="background: #10b981;">Car B - Back</div>
+                                    </div>
+                                </div>
+                                <div class="tka-slider__slide">
+                                    <div class="tka-360-container">
+                                        <div class="tka-360-frame" style="background: #f59e0b;">Car C - Front</div>
+                                        <div class="tka-360-frame" style="background: #f59e0b;">Car C - 45°</div>
+                                        <div class="tka-360-frame" style="background: #f59e0b;">Car C - Side</div>
+                                        <div class="tka-360-frame" style="background: #f59e0b;">Car C - Back</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tka-controls">
+                                <button data-tka-control="<">←</button>
+                                <button data-tka-control=">">→</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
 
     </div>
 
@@ -446,7 +647,7 @@
     <script type="module">
         import gsap from 'gsap';
         import { Draggable } from 'gsap/Draggable';
-        import Slider from './dist/tka-slider.es.js';
+        import Slider from './src/index.js';
 
         gsap.registerPlugin(Draggable);
 
@@ -521,6 +722,9 @@
         };
 
         window.apiSlider = new Slider('#slider-api', {
+            perView: 3,
+            focusAt: 'center',
+            gap: 20,
             loop: true
         }).mount();
 
@@ -528,6 +732,60 @@
         window.apiSlider.on('move.after', ({ index }) => addLog(`Moved to index: ${index}`));
         window.apiSlider.on('drag.start', () => addLog('Drag started'));
         window.apiSlider.on('drag.end', () => addLog('Drag ended'));
+
+        // 8. Hero Fade
+        new Slider('#slider-hero', {
+            type: 'fade',
+            perView: 1,
+            loop: true,
+            pagination: true,
+            animationDuration: 1000
+        }).mount();
+
+        // 9. Tilted Fan
+        new Slider('#slider-fan-tilt', {
+            type: 'fan',
+            loop: true,
+            rotateFactor: 35,
+            fanTilt: 45,
+            fanTranslateZ: -200,
+            fanSpace: 120,
+            animationDuration: 800
+        }).mount();
+
+        // 10. Depth Zoom
+        new Slider('#slider-zoom', {
+            type: 'slide',
+            perView: 1.5,
+            focusAt: 'center',
+            gap: 100,
+            scaleOnCenter: true,
+            scaleAmount: 0.4,
+            scaleGradual: true,
+            loop: true,
+            animationDuration: 1200,
+            animationEase: 'expo.out'
+        }).mount();
+
+        // 11. Glass Perspective
+        new Slider('#slider-glass', {
+            type: 'coverflow',
+            perView: 3,
+            focusAt: 'center',
+            gap: -40,
+            loop: true,
+            animationDuration: 800
+        }).mount();
+
+        // 12. 360 Rotation
+        new Slider('#slider-360', {
+            type: '360',
+            perView: 3,
+            focusAt: 'center',
+            gap: 20,
+            loop: true,
+            rotationSpeed: 9
+        }).mount();
 
     </script>
 </body>

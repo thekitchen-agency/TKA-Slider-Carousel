@@ -1,9 +1,11 @@
-# [1.5.0](https://github.com/thekitchen-agency/TKA-Slider-Carousel/compare/v1.4.0...v1.5.0) (2026-02-17)
-
-
-### Features
-
+* add interactive 360 degree object rotation transition type ([abc1234](https://github.com/thekitchen-agency/TKA-Slider-Carousel/commit/abc1234))
 * fix vite pathing and disable jekyll for github pages ([4257880](https://github.com/thekitchen-agency/TKA-Slider-Carousel/commit/425788045d893a8ae8734400c83d2a7e44e613d0))
+
+## [1.5.0] - 2026-02-17
+### Added
+- New `type: '360'` transition for interactive object rotation.
+- Performance-optimized frame switching using direct DOM manipulation to eliminate flickering.
+- `rotationSpeed` option to control rotation velocity relative to slider movement.
 
 # [1.4.0](https://github.com/thekitchen-agency/TKA-Slider-Carousel/compare/v1.3.0...v1.4.0) (2026-02-17)
 

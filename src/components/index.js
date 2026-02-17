@@ -1,16 +1,16 @@
-import Html from './Html';
-import Track from './Track';
-import Move from './Move';
-import Drag from './Drag';
-import Clones from './Clones';
-import Classes from './Classes';
-import Autoplay from '../plugins/Autoplay';
-import Controls from '../plugins/Controls';
-import Bullets from '../plugins/Bullets';
-import Effects from './Effects';
-import Breakpoints from './Breakpoints';
-import A11y from '../plugins/A11y';
-import Pagination from '../plugins/Pagination';
+import Html from './Html.js';
+import Track from './Track.js';
+import Move from './Move.js';
+import Drag from './Drag.js';
+import Clones from './Clones.js';
+import Classes from './Classes.js';
+import Autoplay from '../plugins/Autoplay.js';
+import Controls from '../plugins/Controls.js';
+import Bullets from '../plugins/Bullets.js';
+import Effects from './Effects.js';
+import Breakpoints from './Breakpoints.js';
+import A11y from '../plugins/A11y.js';
+import Pagination from '../plugins/Pagination.js';
 
 export const Components = {
     Html,

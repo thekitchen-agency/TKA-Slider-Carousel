@@ -135,6 +135,9 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 40px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .fan-container {
@@ -345,12 +348,21 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
 
+    <script type="importmap">
+    {
+        "imports": {
+            "gsap": "https://esm.sh/gsap@3.12.5",
+            "gsap/Draggable": "https://esm.sh/gsap@3.12.5/Draggable"
+        }
+    }
+    </script>
+
     <script type="module">
         import Slider from './src/index.js';
 
         gsap.registerPlugin(Draggable);
 
-        new Slider('#landing-slider', {
+        const slider = new Slider('#landing-slider', {
             type: 'fan',
             loop: true,
             startAt: 0,
@@ -361,6 +373,9 @@
             autoplay: 4000,
             hoverPause: true
         }).mount();
+
+        // Ensure the fan animation pops
+        setTimeout(() => slider.reveal(), 500);
     </script>
 </body>
 

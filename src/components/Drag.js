@@ -15,7 +15,7 @@ export default function Drag(slider, Components, events) {
 
         init() {
             gsap.registerPlugin(Draggable);
-            const { Html, Move } = Components;
+            const { Html, Move, Track } = Components;
             const isFan = slider.options.type === 'fan';
             const isFade = slider.options.type === 'fade';
 

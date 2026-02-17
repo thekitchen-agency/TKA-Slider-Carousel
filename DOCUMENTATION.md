@@ -44,7 +44,7 @@ Options are passed as the second argument to the `Slider` constructor.
 ### Core Options
 | Option | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `type` | `String` | `'slide'` | Transition type: `'slide'`, `'fade'`, `'coverflow'`, or `'fan'`. |
+| `type` | `String` | `'slide'` | Transition type: `'slide'`, `'fade'`, `'coverflow'`, `'fan'`, or `'360'`. |
 | `startAt` | `Number` | `0` | The index of the slide to start on. |
 | `perView` | `Number` | `1` | Number of slides visible at once. |
 | `focusAt` | `String\|Number` | `0` | Focus position: `0` (left) or `'center'`. |
@@ -88,6 +88,12 @@ Used only when `type: 'fan'`.
 | `activeRotation` | `Number` | `0` | Base rotation for the active (top) slide. |
 | `activeScale` | `Number` | `1` | Scale of the active slide. |
 | `activeTranslateY` | `Number` | `0` | Vertical offset for the active slide. |
+
+### 🔄 360° Effect Specifics
+Used only when `type: '360'`. Slides must contain elements with class `.tka-360-frame`.
+| Option | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `rotationSpeed` | `Number` | `1` | Number of **frames** to shift per slide width of movement. Set to `2` for a 90° tilt with 8 frames. |
 
 ### 📱 Responsive Breakpoints
 Breakpoints use a `max-width` logic.
