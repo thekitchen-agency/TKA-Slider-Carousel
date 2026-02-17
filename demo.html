@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TKA Slider - Ultimate Library Demo</title>
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --secondary-color: #10b981;
+            --accent-color: #8b5cf6;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        header {
+            background: #fff;
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            background: linear-gradient(to right, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header p {
+            color: var(--text-muted);
+            font-size: 1.25rem;
+            margin-top: 15px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        section {
+            margin-bottom: 120px;
+            padding-top: 40px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        section:first-of-type {
+            border-top: none;
+        }
+
+        section h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+        }
+
+        section .description {
+            color: var(--text-muted);
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .demo-info {
+            background: #1e293b;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            overflow-x: auto;
+            white-space: pre;
+        }
+
+        .slider-instance-wrapper {
+            background: #fff;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 25px -5px rgb(0 0 0 / 0.05);
+            position: relative;
+        }
+
+        .fan-instance-wrapper {
+            padding: 20px 0;
+        }
+
+        /* Slide colors for demo */
+        .color-1 {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .color-2 {
+            background: #10b981;
+            color: white;
+        }
+
+        .color-3 {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .color-4 {
+            background: #ef4444;
+            color: white;
+        }
+
+        .color-5 {
+            background: #8b5cf6;
+            color: white;
+        }
+
+        .color-6 {
+            background: #ec4899;
+            color: white;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        /* Ensure bullets are visible on white bg */
+        .tka-bullets .tka-bullet {
+            border: 2px solid #cbd5e1;
+        }
+
+        .tka-bullets .tka-bullet.is-active {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+    </style>
+    <link rel="stylesheet" href="dist/tka-slider-carousel.css">
+</head>
+
+<body>
+    <header>
+        <h1>TKA Slider Studio</h1>
+        <p>The comprehensive showcase of every feature, effect, and layout option available in the library.</p>
+    </header>
+
+    <div class="container">
+
+        <!-- 1. THE CAROUSEL STACK CARD FAN -->
+        <section id="demo-fan">
+            <h2>1. Carousel Stack Card Fan</h2>
+            <div class="description">Our flagship 3D fanned interaction. Perfect for galleries and feature highlights.
+            </div>
+            <div class="demo-info">type: 'fan',
+                loop: true,
+                animationDuration: 800,
+                rotateFactor: 15,
+                fanSpace: 160,
+                fanTranslateY: 5</div>
+            <div class="fan-instance-wrapper">
+                <div class="tka-slider" id="slider-fan">
+                    <div class="tka-slider__track">
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-1">The Oasis</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-2">Mountain Peak</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-3">Desert Sun</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-4">Ocean Deep</div>
+                        </div>
+                    </div>
+                    <div class="tka-controls">
+                        <button data-tka-control="<">←</button>
+                        <button data-tka-control=">">→</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. MULTIPLE VIEWS & GAPS -->
+        <section id="demo-per-view">
+            <h2>2. Multi-Card Layout & Gaps</h2>
+            <div class="description">Standard grid-style layout with configurable gaps and visible items.</div>
+            <div class="demo-info">type: 'slide',
+                perView: 4,
+                gap: 30,
+                loop: true</div>
+            <div class="slider-instance-wrapper">
+                <div class="tka-slider" id="slider-per-view">
+                    <div class="tka-slider__track">
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-1" style="height: 250px;">A</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-2" style="height: 250px;">B</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-3" style="height: 250px;">C</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-4" style="height: 250px;">D</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-5" style="height: 250px;">E</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-6" style="height: 250px;">F</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. CENTERED FOCUS & SCALING -->
+        <section id="demo-scale">
+            <h2>3. Centered Focus & Scale Effect</h2>
+            <div class="description">Puts the active slide in the middle and scales down neighbors for dynamic depth.
+            </div>
+            <div class="demo-info">perView: 3,
+                focusAt: 'center',
+                scaleOnCenter: true,
+                scaleAmount: 0.8,
+                scaleGradual: true</div>
+            <div class="slider-instance-wrapper">
+                <div class="tka-slider" id="slider-scale">
+                    <div class="tka-slider__track">
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-5" style="height: 300px;">Slide 1</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-6" style="height: 300px;">Slide 2</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-1" style="height: 300px;">Slide 3</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-2" style="height: 300px;">Slide 4</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-3" style="height: 300px;">Slide 5</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. AUTOPLAY & INTERACTION -->
+        <section id="demo-autoplay">
+            <h2>4. Autoplay & Hover Interactions</h2>
+            <div class="description">Perfect for banner ads or automated showcases. Pauses on hover by default.</div>
+            <div class="demo-info">autoplay: 3000,
+                hoverPause: true,
+                animationDuration: 1000,
+                animationEase: 'expo.inOut'</div>
+            <div class="slider-instance-wrapper">
+                <div class="tka-slider" id="slider-autoplay">
+                    <div class="tka-slider__track">
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-2" style="height: 200px;">Autoplay Active</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-3" style="height: 200px;">Pause on Hover</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-4" style="height: 200px;">Seamless loop</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. 3D COVERFLOW -->
+        <section id="demo-coverflow">
+            <h2>5. Perspective Coverflow</h2>
+            <div class="description">A classic 3D rotation effect that makes the slider feel deep and immersive.</div>
+            <div class="demo-info">type: 'coverflow',
+                perView: 3,
+                focusAt: 'center',
+                gap: 60</div>
+            <div class="slider-instance-wrapper">
+                <div class="tka-slider" id="slider-coverflow">
+                    <div class="tka-slider__track">
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-1" style="height: 300px;">Alpha</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-2" style="height: 300px;">Beta</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-3" style="height: 300px;">Gamma</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-4" style="height: 300px;">Delta</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-5" style="height: 300px;">Epsilon</div>
+                        </div>
+                    </div>
+                    <div class="tka-bullets" data-tka-bullets></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. RESPONSIVE BREAKPOINTS -->
+        <section id="demo-responsive">
+            <h2>6. Responsive Intelligence</h2>
+            <div class="description">Automatically adapts perView and gaps based on screen width. Resize your browser!
+            </div>
+            <div class="demo-info">perView: 4,
+                breakpoints: {
+                1024: { perView: 2, gap: 20 },
+                600: { perView: 1, gap: 10 }
+                }</div>
+            <div class="slider-instance-wrapper">
+                <div class="tka-slider" id="slider-responsive">
+                    <div class="tka-slider__track">
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-6" style="height: 200px;">Desktop: 4</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-1" style="height: 200px;">Tablet: 2</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-2" style="height: 200px;">Mobile: 1</div>
+                        </div>
+                        <div class="tka-slider__slide">
+                            <div class="demo-slide color-3" style="height: 200px;">Responsive</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. API & EVENTS -->
+        <section id="demo-api">
+            <h2>7. API: Methods & Events</h2>
+            <div class="description">Listen to slider state changes or control it from external code.</div>
+
+            <div style="display: grid; grid-template-columns: 1fr 300px; gap: 40px; align-items: start;">
+                <div class="slider-instance-wrapper">
+                    <div class="tka-slider" id="slider-api">
+                        <div class="tka-slider__track">
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide color-1" style="height: 250px;">Slide 0</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide color-2" style="height: 250px;">Slide 1</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide color-3" style="height: 250px;">Slide 2</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 30px; display: flex; gap: 10px; flex-wrap: wrap;">
+                        <button class="api-btn" onclick="window.apiSlider.go('<')">Prev</button>
+                        <button class="api-btn" onclick="window.apiSlider.go('>')">Next</button>
+                        <button class="api-btn" onclick="window.apiSlider.go(0)">Go to 0</button>
+                        <button class="api-btn" onclick="window.apiSlider.go(2)">Go to 2</button>
+                        <button class="api-btn" onclick="window.apiSlider.jump(1)">Instant Jump to 1</button>
+                    </div>
+                </div>
+
+                <div style="background: #fff; padding: 30px; border-radius: 20px; border: 1px solid #e2e8f0;">
+                    <h3 style="margin-top: 0;">Event Log</h3>
+                    <div id="event-log"
+                        style="font-family: monospace; font-size: 13px; height: 300px; overflow-y: auto; background: #f1f5f9; padding: 15px; border-radius: 10px;">
+                        <div style="color: #64748b;">Waiting for interaction...</div>
+                    </div>
+                </div>
+            </div>
+
+            <style>
+                .api-btn {
+                    background: #fff;
+                    border: 1px solid #e2e8f0;
+                    padding: 10px 20px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-weight: 600;
+                    transition: all 0.2s;
+                }
+
+                .api-btn:hover {
+                    background: #f8fafc;
+                    border-color: #cbd5e1;
+                    transform: translateY(-2px);
+                }
+
+                .log-entry {
+                    margin-bottom: 8px;
+                    padding-bottom: 8px;
+                    border-bottom: 1px solid #e2e8f0;
+                }
+
+                .log-time {
+                    color: #94a3b8;
+                    margin-right: 8px;
+                }
+
+                .log-msg {
+                    color: #0f172a;
+                    font-weight: 600;
+                }
+            </style>
+        </section>
+
+    </div>
+
+    <footer>
+        &copy; 2026 TKA Slider Carousel. Engineered for performance and aesthetics.
+    </footer>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "gsap": "https://esm.sh/gsap@3.12.5",
+            "gsap/Draggable": "https://esm.sh/gsap@3.12.5/Draggable"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import gsap from 'gsap';
+        import { Draggable } from 'gsap/Draggable';
+        import Slider from './dist/tka-slider.es.js';
+
+        gsap.registerPlugin(Draggable);
+
+        // 1. Fan
+        new Slider('#slider-fan', {
+            type: 'fan',
+            loop: true,
+            animationDuration: 800,
+            fanSpace: 160
+        }).mount();
+
+        // 2. Per View
+        new Slider('#slider-per-view', {
+            type: 'slide',
+            perView: 4,
+            gap: 30,
+            loop: true,
+            autoplay: false
+        }).mount();
+
+        // 3. Scale on Center
+        new Slider('#slider-scale', {
+            type: 'slide',
+            perView: 3,
+            focusAt: 'center',
+            scaleOnCenter: true,
+            scaleAmount: 0.75,
+            scaleGradual: true,
+            loop: true
+        }).mount();
+
+        // 4. Autoplay
+        new Slider('#slider-autoplay', {
+            type: 'slide',
+            autoplay: 2500,
+            hoverPause: true,
+            animationDuration: 1000,
+            animationEase: 'expo.inOut',
+            loop: true
+        }).mount();
+
+        // 5. Coverflow
+        new Slider('#slider-coverflow', {
+            type: 'coverflow',
+            perView: 3,
+            focusAt: 'center',
+            gap: 60,
+            loop: true,
+            pagination: true
+        }).mount();
+
+        // 6. Responsive
+        new Slider('#slider-responsive', {
+            type: 'slide',
+            perView: 4,
+            gap: 30,
+            loop: true,
+            breakpoints: {
+                1024: { perView: 2, gap: 20 },
+                600: { perView: 1, gap: 10 }
+            }
+        }).mount();
+
+        // 7. API & Events
+        const logEl = document.getElementById('event-log');
+        const addLog = (msg) => {
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            const div = document.createElement('div');
+            div.className = 'log-entry';
+            div.innerHTML = `<span class="log-time">[${time}]</span> <span class="log-msg">${msg}</span>`;
+            logEl.prepend(div);
+        };
+
+        window.apiSlider = new Slider('#slider-api', {
+            loop: true
+        }).mount();
+
+        window.apiSlider.on('mount.after', () => addLog('Slider mounted'));
+        window.apiSlider.on('move.after', ({ index }) => addLog(`Moved to index: ${index}`));
+        window.apiSlider.on('drag.start', () => addLog('Drag started'));
+        window.apiSlider.on('drag.end', () => addLog('Drag ended'));
+
+    </script>
+</body>
+
+</html>

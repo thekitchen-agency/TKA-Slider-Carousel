@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TKA Slider Demo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1>TKA Slider Dev</h1>
+
+  <div class="tka-slider" id="my-slider">
+    <div class="tka-slider__track">
+      <div class="tka-slider__slide">
+        <div class="demo-slide">1</div>
+      </div>
+      <div class="tka-slider__slide">
+        <div class="demo-slide">2</div>
+      </div>
+      <div class="tka-slider__slide">
+        <div class="demo-slide">3</div>
+      </div>
+      <div class="tka-slider__slide">
+        <div class="demo-slide">4</div>
+      </div>
+      <div class="tka-slider__slide">
+        <div class="demo-slide">5</div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="tka-pagination" data-tka-pagination
+      style="position: absolute; top: 20px; right: 20px; background: rgba(0,0,0,0.5); color: #fff; padding: 5px 10px; border-radius: 5px; font-family: sans-serif;">
+    </div>
+
+    <!-- Controls -->
+    <div class="tka-controls">
+      <button data-tka-control="<">Prev</button>
+      <button data-tka-control=">">Next</button>
+    </div>
+
+    <!-- Bullets/Dots -->
+    <div class="tka-bullets" data-tka-bullets></div>
+  </div>
+
+  <!-- GSAP for development -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+
+  <script type="module">
+    import Slider from './src/index.js';
+    import './style.scss';
+
+    // Register GSAP plugins
+    gsap.registerPlugin(Draggable);
+
+    const slider = new Slider('#my-slider', {
+      debug: true,
+      type: 'fan',
+      fanSpace: 500,
+      fanAngle: 95,
+      fanCenter: 100,
+      fanTranslateY: 200,
+      swipeThreshold: 300,
+      perView: 1,
+      focusAt: 'center',
+      startAt: 0,
+      gap: 50,
+      loop: true,
+      autoplay: false,
+      hoverPause: true,
+      animationDuration: 800,
+      pagination: true,
+      keyboard: true,
+      scaleOnCenter: false,
+      rotateFactor: 8,
+      scaleFactor: 0.05,
+      scaleAmount: 0.8,
+      scaleRange: 1,
+      scaleGradual: true,
+      breakpoints: {
+        1024: { perView: 2, gap: 30 },
+        600: { perView: 1, gap: 0, type: 'slide' } // switch back to slide on mobile
+      }
+    }).mount();
+
+    console.log('Slider instance:', slider);
+  </script>
+
+
+
+</body>
+
+</html>

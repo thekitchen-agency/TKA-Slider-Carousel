@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TKA Slider - Reveal Demo</title>
+    <link rel="stylesheet" href="style.scss">
+    <style>
+        body {
+            font-family: sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 50px;
+        }
+
+        .controls {
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 16px;
+            cursor: pointer;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        button:hover {
+            background: #2563eb;
+        }
+
+        .slider-container {
+            width: 300px;
+        }
+
+        .color-1 {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .color-2 {
+            background: #10b981;
+            color: white;
+        }
+
+        .color-3 {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .color-4 {
+            background: #ef4444;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="controls">
+        <button id="reveal-btn">Reveal Slider</button>
+    </div>
+
+    <div class="slider-container">
+        <div class="tka-slider" id="revealer">
+            <div class="tka-slider__track">
+                <div class="tka-slider__slide">
+                    <div class="demo-slide color-1">One</div>
+                </div>
+                <div class="tka-slider__slide">
+                    <div class="demo-slide color-2">Two</div>
+                </div>
+                <div class="tka-slider__slide">
+                    <div class="demo-slide color-3">Three</div>
+                </div>
+                <div class="tka-slider__slide">
+                    <div class="demo-slide color-4">Four</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "gsap": "https://esm.sh/gsap@3.12.5",
+            "gsap/Draggable": "https://esm.sh/gsap@3.12.5/Draggable"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import gsap from 'gsap';
+        import { Draggable } from 'gsap/Draggable';
+        import Slider from './src/index.js';
+
+        gsap.registerPlugin(Draggable);
+
+        const slider = new Slider('#revealer', {
+            type: 'fan',
+            revealOnMount: false,
+            loop: true,
+            activeRotation: -5,
+            activeScale: 1.1,
+            activeTranslateY: -20
+        }).mount();
+
+        document.getElementById('reveal-btn').addEventListener('click', () => {
+            slider.reveal();
+        });
+    </script>
+</body>
+
+</html>

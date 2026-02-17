@@ -1,0 +1,1 @@
+import"./Draggable-BIBO0-Gf.js";import{S as a}from"./Slider-TB0KBL4t.js";gsap.registerPlugin(Draggable);new a("#landing-slider",{type:"fan",loop:!0,startAt:0,fanSpace:180,fanTilt:25,fanTranslateZ:-150,animationDuration:1e3,autoplay:4e3,hoverPause:!0}).mount();

@@ -3,4 +3,5 @@ dist
 .DS_Store
 *.log
 .env
-/*.html
+# Avoid ignoring documentation files
+# /*.html (Removed to allow index.html and demos)

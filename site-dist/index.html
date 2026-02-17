@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TKA Slider Carousel | Premium GSAP-Powered Performance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Outfit:wght@700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --brand-primary: #6366f1;
+            --brand-secondary: #a855f7;
+            --bg-dark: #0f172a;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            margin: 0;
+            background-color: var(--bg-dark);
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Outfit', sans-serif;
+            margin: 0;
+        }
+
+        /* --- Header --- */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 24px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(to right, var(--brand-primary), var(--brand-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-link {
+            color: #94a3b8;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover {
+            color: #fff;
+        }
+
+        .btn-github {
+            background: #fff;
+            color: #0f172a;
+            padding: 10px 20px;
+            border-radius: 99px;
+            font-weight: 600;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: transform 0.2s;
+        }
+
+        .btn-github:hover {
+            transform: translateY(-2px);
+        }
+
+        /* --- Hero --- */
+        .hero {
+            padding: 180px 20px 100px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5.5rem);
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            margin-bottom: 24px;
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: #94a3b8;
+            max-width: 700px;
+            margin: 0 auto 48px;
+        }
+
+        /* --- Featured Slider Section --- */
+        .showcase {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 0;
+        }
+
+        .fan-container {
+            height: 500px;
+            padding-top: 50px;
+        }
+
+        .showcase-slide {
+            width: 320px;
+            height: 450px;
+            border-radius: 24px;
+            overflow: hidden;
+            position: relative;
+            background: #1e293b;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .slide-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: opacity 0.3s;
+        }
+
+        .showcase-slide.is-active .slide-img {
+            opacity: 1;
+        }
+
+        .slide-content {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 30px;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
+        }
+
+        .slide-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+
+        .slide-content p {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            margin: 0;
+        }
+
+        /* --- Bento Grid / Features --- */
+        .features {
+            max-width: 1200px;
+            margin: 120px auto;
+            padding: 0 40px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: 32px;
+            transition: border-color 0.3s;
+        }
+
+        .feature-card:hover {
+            border-color: var(--brand-primary);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(99, 102, 241, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--brand-primary);
+        }
+
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+        }
+
+        .feature-card p {
+            color: #94a3b8;
+            line-height: 1.6;
+            margin: 0;
+        }
+
+        /* --- Footer --- */
+        footer {
+            padding: 80px 40px;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            color: #64748b;
+        }
+
+        /* GSAP specific overrides for landing */
+        .tka-slider__slide {
+            cursor: grab;
+        }
+
+        .tka-slider__slide:active {
+            cursor: grabbing;
+        }
+    </style>
+  <script type="module" crossorigin src="./assets/main-Bye2ODPy.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/Draggable-BIBO0-Gf.js">
+  <link rel="modulepreload" crossorigin href="./assets/Slider-TB0KBL4t.js">
+  <link rel="stylesheet" crossorigin href="./assets/tka-slider-BvPXZ0Wh.css">
+</head>
+
+<body>
+
+    <nav>
+        <a href="#" class="logo">TKA Slider</a>
+        <div class="nav-links">
+            <a href="./demo.html" class="nav-link">Demos</a>
+            <a href="https://github.com/thekitchen-agency/TKA-Slider-Carousel/blob/main/DOCUMENTATION.md"
+                class="nav-link">Docs</a>
+            <a href="https://github.com/thekitchen-agency/TKA-Slider-Carousel" class="btn-github">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                </svg>
+                GitHub
+            </a>
+        </div>
+    </nav>
+
+    <div class="hero">
+        <div class="hero-glow"></div>
+        <h1>The Motion Engine<br>for Modern UI.</h1>
+        <p>A flagship slider library built on GSAP. Pure performance, surgical precision, and 3D effects that wow.</p>
+    </div>
+
+    <section class="showcase">
+        <div class="tka-slider fan-container" id="landing-slider">
+            <div class="tka-slider__track">
+                <div class="tka-slider__slide">
+                    <div class="showcase-slide">
+                        <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=800"
+                            class="slide-img" alt="Abstract 1">
+                        <div class="slide-content">
+                            <h3>3D Stack</h3>
+                            <p>Premium fanned card interaction.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tka-slider__slide">
+                    <div class="showcase-slide">
+                        <img src="https://images.unsplash.com/photo-1633167606207-d840b5070fc2?auto=format&fit=crop&q=80&w=800"
+                            class="slide-img" alt="Abstract 2">
+                        <div class="slide-content">
+                            <h3>Silky Smooth</h3>
+                            <p>Powered by GSAP physics.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tka-slider__slide">
+                    <div class="showcase-slide">
+                        <img src="https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=800"
+                            class="slide-img" alt="Abstract 3">
+                        <div class="slide-content">
+                            <h3>Infinite Loop</h3>
+                            <p>Seamless circular sliding.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tka-slider__slide">
+                    <div class="showcase-slide">
+                        <img src="https://images.unsplash.com/photo-16139092044aa2-a1638a35ee37?auto=format&fit=crop&q=80&w=800"
+                            class="slide-img" alt="Abstract 4">
+                        <div class="slide-content">
+                            <h3>Perspective</h3>
+                            <p>Dynamic 3D coverflow effects.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="features">
+        <div class="feature-card">
+            <div class="feature-icon">✨</div>
+            <h3>Physics Based</h3>
+            <p>Drag momentum and snapping that feels natural, powered by GSAP Draggable.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">💎</div>
+            <h3>Micro-Interactions</h3>
+            <p>Subtle 3D tilts and scaling effects that elevate the user experience instantly.</p>
+        </div>
+        <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <h3>Responsive</h3>
+            <p>First-class support for breakpoints. Change every detail from grid count to transition type.</p>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2026 TKA Slider Carousel. Built for explorers of the web.
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+
+</body>
+
+</html>
