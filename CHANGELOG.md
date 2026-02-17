@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/thekitchen-agency/TKA-Slider-Carousel/compare/v1.5.0...v1.6.0) (2026-02-17)
+
+
+### Features
+
+* allow tracking of html files and fix documentation build ([ca06bf1](https://github.com/thekitchen-agency/TKA-Slider-Carousel/commit/ca06bf195e8348c47a46e493f7fdfa57effc5264))
+
 # [1.5.0](https://github.com/thekitchen-agency/TKA-Slider-Carousel/compare/v1.4.0...v1.5.0) (2026-02-17)
 
 
