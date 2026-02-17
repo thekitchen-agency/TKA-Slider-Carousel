@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/thekitchen-agency/TKA-Slider-Carousel/compare/v1.4.0...v1.5.0) (2026-02-17)
+
+
+### Features
+
+* fix vite pathing and disable jekyll for github pages ([4257880](https://github.com/thekitchen-agency/TKA-Slider-Carousel/commit/425788045d893a8ae8734400c83d2a7e44e613d0))
+
 # [1.4.0](https://github.com/thekitchen-agency/TKA-Slider-Carousel/compare/v1.3.0...v1.4.0) (2026-02-17)
 
 
