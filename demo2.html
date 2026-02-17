@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TKA Slider - All Options & Variations</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --bg: #0f172a;
+            --card-bg: #1e293b;
+            --text: #f8fafc;
+            --muted: #94a3b8;
+            --border: #334155;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+        }
+
+        header {
+            padding: 80px 20px;
+            text-align: center;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        header h1 {
+            font-size: 3.5rem;
+            font-weight: 900;
+            margin: 0;
+            letter-spacing: -2px;
+        }
+
+        header p {
+            font-size: 1.25rem;
+            color: var(--muted);
+            max-width: 700px;
+            margin: 20px auto 0;
+        }
+
+        .nav-links {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+        }
+
+        .nav-links a {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        .example-section {
+            margin-bottom: 150px;
+        }
+
+        .example-header {
+            margin-bottom: 40px;
+        }
+
+        .example-header h2 {
+            font-size: 2.25rem;
+            margin: 0;
+        }
+
+        .example-header p {
+            color: var(--muted);
+            font-size: 1.1rem;
+            margin: 10px 0 0;
+        }
+
+        .config-grid {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 40px;
+            align-items: start;
+        }
+
+        @media (max-width: 1024px) {
+            .config-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .slider-box {
+            background: #1e293b;
+            padding: 50px;
+            border-radius: 32px;
+            border: 1px solid var(--border);
+            position: relative;
+        }
+
+        .code-box {
+            background: #000;
+            padding: 20px;
+            border-radius: 16px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: #d1d5db;
+            border: 1px solid var(--border);
+            position: sticky;
+            top: 80px;
+        }
+
+        .code-box span {
+            color: #60a5fa;
+        }
+
+        .code-box b {
+            color: #f472b6;
+            font-weight: normal;
+        }
+
+        .demo-slide {
+            height: 300px;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            font-weight: 800;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Specialized Fan demo wrapper */
+        .fan-wrapper {
+            padding: 100px 0;
+        }
+
+        .option-tag {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #334155;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            margin-right: 8px;
+            color: #ec4899;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+    </style>
+    <script type="importmap">
+    {
+        "imports": {
+            "gsap": "https://esm.sh/gsap@3.12.5",
+            "gsap/Draggable": "https://esm.sh/gsap@3.12.5/Draggable"
+        }
+    }
+    </script>
+  <script type="module" crossorigin src="./assets/demo2-CFDeo4sM.js"></script>
+  <link rel="modulepreload" crossorigin href="./assets/Draggable-BIBO0-Gf.js">
+  <link rel="modulepreload" crossorigin href="./assets/tka-slider.es-sYzcMyzn.js">
+  <link rel="stylesheet" crossorigin href="./assets/tka-slider-BvPXZ0Wh.css">
+</head>
+
+<body>
+    <header>
+        <h1>ULTIMATE SHOWCASE</h1>
+        <p>A deep dive into every property, event, and configuration available in the TKA Slider library.</p>
+    </header>
+
+    <div class="nav-links">
+        <a href="#easings">Easings</a>
+        <a href="#scaling">Advanced Scaling</a>
+        <a href="#fan-pro">Fan Pro</a>
+        <a href="#alignment">Alignment</a>
+        <a href="#controls">Controls</a>
+        <a href="#responsive">Breakpoints</a>
+    </div>
+
+    <div class="container">
+
+        <!-- 1. EASINGS & DURATIONS -->
+        <section class="example-section" id="easings">
+            <div class="example-header">
+                <span class="option-tag">animationEase</span>
+                <span class="option-tag">animationDuration</span>
+                <h2>Surgical Precision Movement</h2>
+                <p>Test various GSAP easings. From snappy "expo" to playful "elastic" or "bounce".</p>
+            </div>
+            <div class="config-grid">
+                <div class="slider-box">
+                    <div class="tka-slider" id="slider-easing">
+                        <div class="tka-slider__track">
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide" style="background: #ef4444;">1</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide" style="background: #3b82f6;">2</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide" style="background: #10b981;">3</div>
+                            </div>
+                        </div>
+                        <div class="tka-controls">
+                            <button data-tka-control="<">Prev</button>
+                            <button data-tka-control=">">Next</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-box">
+                    <span>new</span> Slider(<span>'#id'</span>, {
+                    <b>animationDuration</b>: 1200,
+                    <b>animationEase</b>: <span>'elastic.out(1, 0.5)'</span>,
+                    <b>type</b>: <span>'slide'</span>,
+                    <b>loop</b>: true
+                    });
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. ADVANCED SCALING -->
+        <section class="example-section" id="scaling">
+            <div class="example-header">
+                <span class="option-tag">scaleOnCenter</span>
+                <span class="option-tag">scaleGradual</span>
+                <span class="option-tag">scaleRange</span>
+                <h2>Cinema Scope Scaling</h2>
+                <p>Create a "piling" effect where slides scale down as they move away from the center. Gradient based
+                    transitions.</p>
+            </div>
+            <div class="config-grid">
+                <div class="slider-box">
+                    <div class="tka-slider" id="slider-scaling">
+                        <div class="tka-slider__track">
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide" style="background: #f59e0b;">A</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide" style="background: #06b6d4;">B</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide" style="background: #8b5cf6;">C</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide" style="background: #ec4899;">D</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide" style="background: #10b981;">E</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-box">
+                    <span>new</span> Slider(<span>'#id'</span>, {
+                    <b>perView</b>: 3,
+                    <b>focusAt</b>: <span>'center'</span>,
+                    <b>scaleOnCenter</b>: true,
+                    <b>scaleAmount</b>: 0.5,
+                    <b>scaleRange</b>: 1.5,
+                    <b>scaleGradual</b>: true
+                    });
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. FAN PRO OPTIONS -->
+        <section class="example-section" id="fan-pro">
+            <div class="example-header">
+                <span class="option-tag">fanTilt</span>
+                <span class="option-tag">fanTranslateZ</span>
+                <span class="option-tag">fanTranslateY</span>
+                <h2>The 3D Deck Specialist</h2>
+                <p>Customize every angle of the fanned stack. We call this "The Dealer's View".</p>
+            </div>
+            <div class="config-grid">
+                <div class="slider-box fan-wrapper">
+                    <div class="tka-slider" id="slider-fan-pro">
+                        <div class="tka-slider__track">
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide" style="background: #6366f1;">Spade</div>
+                            </div>
+                            <div class="demo-slide" style="background: #ef4444;">Heart</div>
+                            <div class="demo-slide" style="background: #2563eb;">Club</div>
+                            <div class="demo-slide" style="background: #10b981;">Diamond</div>
+                        </div>
+                        <div class="tka-controls">
+                            <button data-tka-control="<">Discard</button>
+                            <button data-tka-control=">">Draw</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-box">
+                    <span>new</span> Slider(<span>'#id'</span>, {
+                    <b>type</b>: <span>'fan'</span>,
+                    <b>fanSpace</b>: 280,
+                    <b>rotateFactor</b>: 25,
+                    <b>fanTilt</b>: 40,
+                    <b>fanTranslateZ</b>: -300,
+                    <b>fanTranslateY</b>: -50,
+                    <b>swipeThreshold</b>: 120
+                    });
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. ALIGNMENT & START POSITION -->
+        <section class="example-section" id="alignment">
+            <div class="example-header">
+                <span class="option-tag">startAt</span>
+                <span class="option-tag">focusAt</span>
+                <h2>Orientation Control</h2>
+                <p>Start from any index and align the active card to the left, center, or right (via pixel offset).</p>
+            </div>
+            <div class="config-grid">
+                <div class="slider-box">
+                    <div class="tka-slider" id="slider-align">
+                        <div class="tka-slider__track">
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide" style="background: #111;">0</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide" style="background: #333;">1</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide" style="background: #555;">2</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide" style="background: #777;">3</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="code-box">
+                    <span>new</span> Slider(<span>'#id'</span>, {
+                    <b>startAt</b>: 2,
+                    <b>focusAt</b>: 100, <span>// 100px from left</span>
+                    <b>gap</b>: 20,
+                    <b>perView</b>: 2
+                    });
+                </div>
+            </div>
+        </section>
+
+        <!-- 5. AUTOPLAY & CONTROLS -->
+        <section class="example-section" id="controls">
+            <div class="example-header">
+                <span class="option-tag">autoplay</span>
+                <span class="option-tag">keyboard</span>
+                <span class="option-tag">hoverPause</span>
+                <h2>Hands-Free Showreels</h2>
+                <p>Automated looping with pause on hover. Use keyboard arrows to take control.</p>
+            </div>
+            <div class="config-grid">
+                <div class="slider-box">
+                    <div class="tka-slider" id="slider-auto">
+                        <div class="tka-slider__track">
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide" style="background: #0ea5e9;">News 1</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide" style="background: #2563eb;">News 2</div>
+                            </div>
+                            <div class="tka-slider__slide">
+                                <div class="demo-slide" style="background: #1d4ed8;">News 3</div>
+                            </div>
+                        </div>
+                        <div class="tka-bullets" data-tka-bullets></div>
+                    </div>
+                </div>
+                <div class="code-box">
+                    <span>new</span> Slider(<span>'#id'</span>, {
+                    <b>autoplay</b>: 2000,
+                    <b>hoverPause</b>: true,
+                    <b>keyboard</b>: true,
+                    <b>loop</b>: true
+                    });
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer>
+        TKA Slider Engine v2.0 - Built for Performance.
+    </footer>
+
+
+
+</body>
+
+</html>
