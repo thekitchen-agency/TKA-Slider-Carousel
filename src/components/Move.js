@@ -56,13 +56,19 @@ export default function Move(slider, Components, events) {
             }
 
             const coordinate = Track.getCoordinate(index);
+            const totalWidth = Html.slides.length * (Track.slideWidth + slider.options.gap); // This is not quite right for loop swap
 
             this.tween = gsap.to(Html.track, {
                 x: -coordinate,
                 duration: duration,
                 ease: ease,
                 onUpdate: () => {
-                    events.emit('move', { x: gsap.getProperty(Html.track, 'x') });
+                    const currentX = gsap.getProperty(Html.track, 'x');
+
+                    // If we are looping, we might want to check for early swaps during long momentum
+                    // However, we usually just let onComplete handle it for discrete indices.
+                    // For now, let's keep it simple and just emit move.
+                    events.emit('move', { x: currentX });
                 },
                 onComplete: () => {
                     slider.state.animationDuration = 0;
@@ -86,10 +92,8 @@ export default function Move(slider, Components, events) {
          * Returns true if a jump occurred.
          */
         loop(index) {
-            const { Track, Html } = Components;
             const clonesCount = slider.clonesCount || 0;
-            const count = Html.slides.length;
-            const originalCount = count - (clonesCount * 2);
+            const originalCount = Components.Html.slides.length - (clonesCount * 2);
 
             // Use a small epsilon to avoid floating point issues
             const eps = 0.001;
@@ -106,6 +110,42 @@ export default function Move(slider, Components, events) {
             }
 
             return false;
+        },
+
+
+        /**
+         * Snap-check for coordinates during dragging/inertia.
+         * Swaps track position if it goes too far.
+         * @param {number} x Current x coordinate
+         * @returns {number|null} New x if swapped, else null
+         */
+        loopX(x) {
+            if (!slider.options.loop) return null;
+
+            const { Track, Html } = Components;
+            const clonesCount = slider.clonesCount || 0;
+            const originalCount = Html.slides.length - (clonesCount * 2);
+
+            if (originalCount <= 0) return null;
+
+            const slideWidthWithGap = Track.slideWidth + slider.options.gap;
+            const totalWidth = originalCount * slideWidthWithGap;
+
+            const pos = -x;
+            const startLimit = Track.getCoordinate(clonesCount);
+            const endLimit = Track.getCoordinate(clonesCount + originalCount);
+
+            // If we've dragged past the original slides into clones, jump back.
+            // We give it a little "buffer" of half a slide so it doesn't jump too aggressively.
+            if (pos < startLimit - (slideWidthWithGap * 0.5)) {
+                return x - totalWidth;
+            }
+
+            if (pos > endLimit - (slideWidthWithGap * 0.5)) {
+                return x + totalWidth;
+            }
+
+            return null;
         },
 
 

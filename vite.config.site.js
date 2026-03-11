@@ -15,6 +15,7 @@ export default defineConfig({
                 demo: resolve(__dirname, 'demo.html'),
                 demo2: resolve(__dirname, 'demo2.html'),
                 reveal: resolve(__dirname, 'demo-reveal.html'),
+                360: resolve(__dirname, 'demo-360.html'),
             },
         },
     },

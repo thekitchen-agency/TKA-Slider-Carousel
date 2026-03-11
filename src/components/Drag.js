@@ -49,6 +49,32 @@ export default function Drag(slider, Components, events) {
                         events.emit('drag', { x: this.x, y: this.y });
                         return;
                     }
+
+                    // Seamless Loop during drag
+                    if (slider.options.loop) {
+                        const newX = Move.loopX(this.x);
+                        if (newX !== null) {
+                            const delta = newX - this.x;
+                            this.x = newX;
+                            this.startX -= delta;
+                            gsap.set(this.target, { x: newX });
+                            this.update();
+                        }
+                    }
+
+                    events.emit('drag', { x: this.x });
+                },
+                onThrowUpdate: function () {
+                    if (!isFade && !isFan && slider.options.loop) {
+                        const newX = Move.loopX(this.x);
+                        if (newX !== null) {
+                            // During throw, we can't easily adjust the tween's path,
+                            // but we can snap the target and let Move handle the final snap.
+                            // Actually, updating x mid-throw might work if GSAP respects the change.
+                            gsap.set(this.target, { x: newX });
+                            this.update();
+                        }
+                    }
                     events.emit('drag', { x: this.x });
                 },
                 onDragEnd: function () {

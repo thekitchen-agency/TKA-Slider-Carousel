@@ -1,3 +1,15 @@
+# [1.8.0] - 2026-03-11
+
+### Added
+- New 360-degree interactive demo (`demo-360.html`) included in build distribution.
+- Enhanced 360 object container logic for the demo site.
+
+### Improved
+- Optimized infinite loop logic to handle rapid dragging and high-velocity throws.
+- Implemented a "Speed Governor" in the Drag component to cap maximum movement per frame.
+- Refined inertia physics with higher resistance and duration caps for better control.
+- Improved coordinate synchronization between the physical track and logical state.
+
 # [1.7.0](https://github.com/thekitchen-agency/tka-slider-carousel/compare/v1.6.0...v1.7.0) (2026-02-17)
 
 
