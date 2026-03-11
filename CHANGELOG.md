@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/thekitchen-agency/tka-slider-carousel/compare/v1.7.0...v1.8.0) (2026-03-11)
+
+
+### Features
+
+* bump version to 1.8.0, add 360 demo, and improve looping stability ([0637033](https://github.com/thekitchen-agency/tka-slider-carousel/commit/0637033bdb0f0fdb57b88c7b3834da885c8529d6))
+
 # [1.8.0] - 2026-03-11
 
 ### Added
