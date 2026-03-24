@@ -108,7 +108,11 @@ export default function Effects(slider, Components, events) {
                 // Base Scale logic
                 let scale = 1;
                 if (scaleOnCenter) {
-                    const range = scaleRange || 1;
+                    let range = scaleRange || 1;
+                    if (slider.options.scaleGradual && !scaleRange) {
+                        // Smoothly scale over the visible viewport range
+                        range = Math.max(1, slider.options.perView);
+                    }
                     scale = 1 - (Math.min(normalizedDistance, range) / range * (1 - scaleAmount));
                     scale = Math.max(scaleAmount, Math.min(1, scale));
                 }
