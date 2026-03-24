@@ -1,3 +1,9 @@
+# [1.8.1] - 2026-03-24
+
+### Fixed
+- Resolved an issue where rapid dragging could cause the slider to break apart and lose image display.
+- Enhanced stability during fast interactions to prevent the slider from entering an unrecoverable state.
+
 # [1.8.0] - 2026-03-11
 
 ### Added
