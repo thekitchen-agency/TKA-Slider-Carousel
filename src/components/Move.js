@@ -62,6 +62,7 @@ export default function Move(slider, Components, events) {
                 x: -coordinate,
                 duration: duration,
                 ease: ease,
+                overwrite: 'auto',
                 onUpdate: () => {
                     const currentX = gsap.getProperty(Html.track, 'x');
 
