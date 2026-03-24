@@ -24,9 +24,10 @@ export default function Drag(slider, Components, events) {
                 type: isFan ? 'x,y' : 'x',
                 trigger: Html.root,
                 edgeResistance: 0.65,
-                inertia: true,
+                // Removed inertia: true to prevent throw tweens from conflicting with Move.to() snaps
                 onDragStart: () => {
                     slider.state.isDragging = true;
+                    slider.state.animationDuration = 0;
                     if (Move.tween) Move.tween.kill();
                     events.emit('drag.start');
                 },
@@ -79,6 +80,9 @@ export default function Drag(slider, Components, events) {
                 },
                 onDragEnd: function () {
                     slider.state.isDragging = false;
+
+                    // Kill any internal tween if Draggable somehow created one, just in case
+                    if (this.tween) this.tween.kill();
 
                     if (isFade || isFan) {
                         // Reset track one last time to be safe
