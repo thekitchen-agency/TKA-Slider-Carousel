@@ -12,6 +12,11 @@
 - Resolved an issue where rapid dragging could cause the slider to break apart and lose image display.
 - Enhanced stability during fast interactions to prevent the slider from entering an unrecoverable state.
 
+# [1.8.0] - 2026-03-24
+
+### Features
+- bump version to 1.8.0, add 360 demo, and improve looping stability
+
 # [1.8.0] - 2026-03-11
 
 ### Added
@@ -29,10 +34,10 @@
 
 ### Features
 
-* add interactive 360 degree object rotation effect ([49e215d](https://github.com/thekitchen-agency/tka-slider-carousel/commit/49e215df7935d54c038a99baf0f3c69e13fcf55c)), closes [hi#performance](https://github.com/hi/issues/performance) [hi#res](https://github.com/hi/issues/res)
+* add interactive 360 degree object rotation effect (49e215d), closes hi#performance hi#res
 
-* add interactive 360 degree object rotation transition type ([abc1234](https://github.com/thekitchen-agency/TKA-Slider-Carousel/commit/abc1234))
-* fix vite pathing and disable jekyll for github pages ([4257880](https://github.com/thekitchen-agency/TKA-Slider-Carousel/commit/425788045d893a8ae8734400c83d2a7e44e613d0))
+* add interactive 360 degree object rotation transition type (abc1234)
+* fix vite pathing and disable jekyll for github pages (4257880)
 
 ## [1.5.0] - 2026-02-17
 ### Added
@@ -45,33 +50,33 @@
 
 ### Bug Fixes
 
-* correct setup-node action in deploy workflow ([adaff49](https://github.com/thekitchen-agency/TKA-Slider-Carousel/commit/adaff49afb8d672513b5032da664424c0352f8bb))
+* correct setup-node action in deploy workflow (adaff49)
 
 
 ### Features
 
-* fix path resolution in documentation build config ([a8d771c](https://github.com/thekitchen-agency/TKA-Slider-Carousel/commit/a8d771c8283038cfd413782ef91ba164a70e2678))
+* fix path resolution in documentation build config (a8d771c)
 
 # [1.3.0](https://github.com/thekitchen-agency/TKA-Slider-Carousel/compare/v1.2.0...v1.3.0) (2026-02-17)
 
 
 ### Features
 
-* add comprehensive documentation and interactive showcase site ([4e1b6d9](https://github.com/thekitchen-agency/TKA-Slider-Carousel/commit/4e1b6d9a4d370cf68baa173458a046063da71512))
+* add comprehensive documentation and interactive showcase site (4e1b6d9)
 
 # [1.2.0](https://github.com/thekitchen-agency/TKA-Slider-Carousel/compare/v1.1.0...v1.2.0) (2026-02-17)
 
 
 ### Features
 
-* added documentation ([36efdbb](https://github.com/thekitchen-agency/TKA-Slider-Carousel/commit/36efdbb46c5a63ec5ca7d49a0794589d137709fe))
+* added documentation (36efdbb)
 
 # [1.1.0](https://github.com/thekitchen-agency/TKA-Slider-Carousel/compare/v1.0.3...v1.1.0) (2026-02-17)
 
 
 ### Features
 
-* added methods to control slider apart from internal controls ([715d6b1](https://github.com/thekitchen-agency/TKA-Slider-Carousel/commit/715d6b1ee1bccc033878300ea14f779c967179b0))
+* added methods to control slider apart from internal controls (715d6b1)
 
 # Changelog
 
