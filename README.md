@@ -12,7 +12,7 @@ A premium, high-performance slider library powered by **GSAP**. Designed for sil
 - 🎭 **Advanced Transitions**: Default `slide`, smooth `fade`, premium 3D `coverflow`, flagship `fan` stack, and interactive `360` object rotation.
 - 🔄 **Infinite Looping**: Seamlessly loops slides with intelligent cloning.
 - 📱 **Fully Responsive**: Breakpoint-based configuration for `perView`, `gap`, and even transition types.
-- 🖱️ **Drag & Touch Support**: Powered by GSAP Draggable with momentum and snapping.
+- 🖱️ **Drag & Touch Support**: Powered by GSAP Draggable with robust physics, momentum, and snapping for ultra-stable high-velocity dragging.
 - ♿ **Accessibility**: Built-in keyboard navigation (Arrow keys) and ARIA support.
 - 🔢 **Pagination & Controls**: Easy integration with custom dots, arrows, and fraction pagination (e.g., "1 / 5").
 - ⏱️ **Autoplay**: Fully configurable with `hoverPause` support.
