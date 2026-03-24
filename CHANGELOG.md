@@ -1,3 +1,11 @@
+# [1.8.2] - 2026-03-24
+
+### Added
+- Gradual scaling effect to enhance slider interaction visuals.
+- Improved move animation stability for more fluid transitions.
+- Enhanced drag handling for touch and mouse interactions to prevent instability.
+- Updated README documentation for Drag & Touch Support.
+
 # [1.8.1] - 2026-03-24
 
 ### Fixed
