@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/thekitchen-agency/tka-slider-carousel/compare/v1.8.0...v1.9.0) (2026-03-24)
+
+
+### Features
+
+* release version 1.8.2 with enhanced animations and scaling ([5424574](https://github.com/thekitchen-agency/tka-slider-carousel/commit/54245743fb61280719b058c5cfdf6ea789c9edc9))
+
 # [1.8.2] - 2026-03-24
 
 ### Added
