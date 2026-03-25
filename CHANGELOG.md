@@ -1,3 +1,10 @@
+## [1.10.1](https://github.com/thekitchen-agency/tka-slider-carousel/compare/v1.10.0...v1.10.1) (2026-03-25)
+
+
+### Bug Fixes
+
+* enable responsive toggles for arrows, bullets and pagination via options ([e25ed54](https://github.com/thekitchen-agency/tka-slider-carousel/commit/e25ed549ee7e8adbfa8568d9080d574e0857a2dd))
+
 # [1.10.1] - 2026-03-25
 
 ### Added
