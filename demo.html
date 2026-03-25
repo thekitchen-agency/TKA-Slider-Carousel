@@ -191,9 +191,10 @@
         }
     }
     </script>
-  <script type="module" crossorigin src="./assets/demo-DYP7rFlM.js"></script>
+  <script type="module" crossorigin src="./assets/demo-DoViE5W7.js"></script>
   <link rel="modulepreload" crossorigin href="./assets/Draggable-BIBO0-Gf.js">
-  <link rel="modulepreload" crossorigin href="./assets/Slider-LpUzaHXw.js">
+  <link rel="modulepreload" crossorigin href="./assets/Slider-CUINmycf.js">
+  <link rel="stylesheet" crossorigin href="./assets/Slider-CWhbZlsT.css">
   <link rel="stylesheet" crossorigin href="./assets/tka-slider-carousel-BiLWpzH3.css">
 </head>
 
@@ -339,7 +340,9 @@
             <div class="demo-info">type: 'coverflow',
                 perView: 3,
                 focusAt: 'center',
-                gap: 60</div>
+                gap: -40,
+                scaleOnCenter: true,
+                scaleAmount: 0.85</div>
             <div class="slider-instance-wrapper">
                 <div class="tka-slider" id="slider-coverflow">
                     <div class="tka-slider__track">
@@ -529,11 +532,12 @@
                     <div class="description">An immersive effect where slides zoom in from the background. Perfect for
                         storytelling.</div>
                     <div class="demo-info">type: 'slide',
-                        perView: 1.5,
+                        perView: 1.2,
                         focusAt: 'center',
                         scaleOnCenter: true,
                         scaleAmount: 0.3,
-                        scaleGradual: true</div>
+                        scaleOpacity: 0.3,
+                        scaleDepth: 1200</div>
                     <div class="slider-instance-wrapper" style="background: #000; overflow: hidden;">
                         <div class="tka-slider" id="slider-zoom">
                             <div class="tka-slider__track">
@@ -565,7 +569,9 @@
                     <div class="demo-info">type: 'coverflow',
                         perView: 3,
                         focusAt: 'center',
-                        gap: -40</div>
+                        gap: -40,
+                        scaleOnCenter: true,
+                        scaleAmount: 0.85</div>
                     <div class="slider-instance-wrapper"
                         style="background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); padding: 100px 40px;">
                         <div class="tka-slider" id="slider-glass">
