@@ -41,7 +41,9 @@
             padding: 40px 20px;
         }
 
-        .slider-instance-wrapper {}
+        .slider-instance-wrapper {
+            margin-bottom: 60px;
+        }
 
         .tka-360-container {
             position: relative;
@@ -134,12 +136,45 @@
 
         gsap.registerPlugin(Draggable);
 
+        // CONFIGURATION: These settings drive both the DOM generation and the Slider
+        const sliderOptions = {
+            type: '360',
+            perView: 3,
+            focusAt: 'center',
+            gap: 20,
+            loop: true,
+            autoplay: 3000,
+            animationDuration: 1500,
+            rotationSpeed: 6 // Frames per slide width
+        };
+
+        // Determine which frames we actually need based on the viewport and rotation speed
+        // Max distance from focus point for a slide being even partially visible
+        const maxDist = (sliderOptions.perView / 2) + 0.5;
+        const maxFrameShift = Math.ceil(maxDist * sliderOptions.rotationSpeed);
+        const totalPossibleFrames = 36; // Based on the 10-degree increments in our image set
+
         // Generate frames based on provided images
         const carFolders = ['car_a', 'car_b', 'car_c'];
         document.querySelectorAll('.tka-360-container').forEach((container, carIdx) => {
             const folder = carFolders[carIdx];
-            for (let i = 0; i < 36; i++) {
-                const angle = (i * 10).toString().padStart(3, '0');
+            for (let i = 0; i < totalPossibleFrames; i++) {
+                const angleValue = i * 10;
+
+                // DYNAMIC OPTIMIZATION:
+                // Check if frame 'i' is within the reach of the slider based on settings
+                const isForwardInReach = i <= maxFrameShift;
+                const isBackwardInReach = i >= (totalPossibleFrames - maxFrameShift);
+                const isNeeded = isForwardInReach || isBackwardInReach;
+
+                if (!isNeeded) {
+                    const spacer = document.createElement('div');
+                    spacer.className = 'tka-360-frame placeholder';
+                    container.appendChild(spacer);
+                    continue;
+                }
+
+                const angle = angleValue.toString().padStart(3, '0');
                 const img = document.createElement('img');
                 img.className = 'tka-360-frame';
                 img.src = `images/${folder}/EXT${angle}.png`;
@@ -148,16 +183,7 @@
             }
         });
 
-        const slider = new Slider('#slider-360', {
-            type: '360',
-            perView: 3,
-            focusAt: 'center',
-            gap: 20,
-            loop: true,
-            autoplay: 3000,
-            animationDuration: 1500,
-            rotationSpeed: 9 // 9 frames = 90 degrees in a 36-frame sequence
-        }).mount();
+        const slider = new Slider('#slider-360', sliderOptions).mount();
 
     </script>
 </body>

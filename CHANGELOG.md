@@ -1,3 +1,17 @@
+# [1.10.0] - 2026-03-25
+
+### Added
+- Comprehensive documentation for previously internal visual effects: `scaleGradual`, `scaleOpacity`, `scaleDepth`, and `scaleBlur`.
+- New 3D Effect options documented: `perspective`, `coverflowRotation`, and `coverflowDepth`.
+- Support for custom animation plugins with documented API and examples.
+- New public method `.register()` for dynamic component management.
+- New system events: `slide.active`, `slide.inactive`, and `resize`.
+
+### Improved
+- Optimized the 360° Object Slider demo with a new dynamic image generator that only loads required angles based on settings.
+- Significantly reduced initial asset loading for the 360° demo by skipping non-visible angles (back-view).
+- Refined default 360° rotation speed for a more premium "showroom" feel.
+
 # [1.9.0](https://github.com/thekitchen-agency/tka-slider-carousel/compare/v1.8.0...v1.9.0) (2026-03-24)
 
 

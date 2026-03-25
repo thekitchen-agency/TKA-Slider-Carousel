@@ -107,23 +107,34 @@ export default function Effects(slider, Components, events) {
 
                 // Base Scale logic
                 let scale = 1;
+                let scaleFactor = 0; // 0 at center, 1 at range or beyond
                 if (scaleOnCenter) {
                     let range = scaleRange || 1;
                     if (slider.options.scaleGradual && !scaleRange) {
                         // Smoothly scale over the visible viewport range
                         range = Math.max(1, slider.options.perView);
                     }
-                    scale = 1 - (Math.min(normalizedDistance, range) / range * (1 - scaleAmount));
+                    scaleFactor = Math.min(normalizedDistance, range) / range;
+                    scale = 1 - (scaleFactor * (1 - scaleAmount));
                     scale = Math.max(scaleAmount, Math.min(1, scale));
                 }
 
                 const props = { overwrite: true };
 
                 if (type === 'coverflow') {
-                    props.rotationY = signedDistance * -30;
-                    props.z = normalizedDistance * -100;
-                    props.opacity = this.isRevealed ? (1 - (Math.min(normalizedDistance, 2) * 0.2)) : 0;
+                    const rot = slider.options.coverflowRotation || 45;
+                    const depth = slider.options.coverflowDepth || -200;
+                    const perspective = slider.options.perspective || 1000;
+
+                    gsap.set(Html.root, { perspective: perspective });
+
+                    props.rotationY = signedDistance * -rot;
+                    props.z = normalizedDistance * depth;
                     props.scale = scale;
+                    props.opacity = this.isRevealed ? (1 - (Math.min(normalizedDistance, 2) * 0.2)) : 0;
+                    
+                    // Z-Index Management to ensure center is always on top
+                    slide.style.zIndex = 10 - Math.floor(normalizedDistance);
                 }
                 else if (type === '360') {
                     const container = inner.querySelector('.tka-360-container') || inner;
@@ -216,9 +227,32 @@ export default function Effects(slider, Components, events) {
                 else {
                     // Default Slide type
                     props.scale = scale;
-                    props.opacity = !this.isRevealed ? 0 : (scaleOnCenter ? (scale < 1 ? 0.6 : 1) : 1);
+
+                    if (scaleOnCenter) {
+                        // Interpolate opacity if user set scaleOpacity < 1
+                        const minOpacity = slider.options.scaleOpacity !== undefined ? slider.options.scaleOpacity : 0.6;
+                        props.opacity = this.isRevealed ? (1 - (scaleFactor * (1 - minOpacity))) : 0;
+                        
+                        // Apply Z-depth if enabled
+                        if (slider.options.scaleDepth) {
+                            props.z = scaleFactor * -slider.options.scaleDepth;
+                        }
+
+                        // Apply blur
+                        if (slider.options.scaleBlur) {
+                            props.filter = `blur(${scaleFactor * slider.options.scaleBlur}px)`;
+                        } else {
+                            props.filter = 'blur(0px)';
+                        }
+                        
+                        // Ensure center slide is always on top
+                        slide.style.zIndex = 10 - Math.floor(normalizedDistance);
+                    } else {
+                        props.opacity = !this.isRevealed ? 0 : 1;
+                        props.z = 0;
+                    }
+
                     props.rotationY = 0;
-                    props.z = 0;
                     props.rotation = 0;
                     props.x = 0;
                     props.y = 0;
@@ -234,7 +268,11 @@ export default function Effects(slider, Components, events) {
                 props.duration = duration;
                 if (!props.ease) props.ease = animationEase;
 
-                if (jump) {
+                // For track-linked animations (slide, coverflow, 360), we must sync 
+                // instantly to the track position. The track itself is already handled by Move.js
+                const isTrackLinked = type === 'slide' || type === 'coverflow' || type === '360';
+
+                if (jump || isTrackLinked) {
                     gsap.set(inner, props);
                 } else {
                     gsap.to(inner, props);

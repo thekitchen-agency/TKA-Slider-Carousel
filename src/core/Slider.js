@@ -36,6 +36,12 @@ export class Slider {
             pagination: false, // boolean or selector
             keyboard: true,
             scaleGradual: false,
+            scaleOnCenter: false,
+            scaleAmount: 0.8,
+            scaleRange: 1,
+            scaleOpacity: 1,
+            scaleDepth: 0,
+            scaleBlur: 0,
 
             // Fan specifics
             rotateFactor: 15,
@@ -45,6 +51,11 @@ export class Slider {
             activeRotation: 0,
             activeScale: 1,
             activeTranslateY: 0,
+
+            // Coverflow specifics
+            coverflowRotation: 45,
+            coverflowDepth: -200,
+            perspective: 1000,
 
             breakpoints: {},
             swipeThreshold: 80, // Distance to trigger swipe
