@@ -45,9 +45,11 @@ These settings apply regardless of the transition type selected.
 | `focusAt` | `String\|Number` | `0` | Align active slide to: `0` (left), `'center'`, or a specific index offset. |
 | `gap` | `Number` | `0` | Pixel-spacing between slides. Supports negative values for overlap. |
 | `loop` | `Boolean` | `false` | Enable infinite wrap-around. |
+| `arrows` | `Boolean` | `true` | Show/hide navigation arrows based on `[data-tka-control]`. |
+| `bullets` | `Boolean` | `true` | Show/hide dot indicators based on `[data-tka-bullets]`. |
 | `revealOnMount` | `Boolean` | `true` | Automatically trigger entrance animation on load. |
 | `debug` | `Boolean` | `false` | Log internal events and state changes to console. |
-| `breakpoints` | `Object` | `{}` | Key-value pairs of `max-width: { options }` for responsive design. |
+| `breakpoints` | `Object` | `{}` | Key-value pairs of `max-width: { options }` for responsive design. Supports `perView`, `gap`, `focusAt`, `arrows`, `bullets`, and `pagination`. |
 
 ---
 
@@ -154,8 +156,8 @@ Use `slider.on('event', data => ...)` to hook into the lifecycle.
 
 | Module | Activation | Functionality |
 | :--- | :--- | :--- |
-| **Controls** | Auto-detects `[data-tka-control]` | Arrow navigation and jump links. |
-| **Bullets** | Auto-detects `[data-tka-bullets]` | Generates dot indicators. |
+| **Controls** | Option `arrows: true` | Arrow navigation and jump links. |
+| **Bullets** | Option `bullets: true` | Generates dot indicators. |
 | **Pagination**| Option `pagination` | Displays current index (e.g. "1 / 5"). |
 | **Autoplay** | Option `autoplay` | Automatic timed navigation. |
 | **A11y** | Option `keyboard: true` | Screen reader Support and keyboard focus. |

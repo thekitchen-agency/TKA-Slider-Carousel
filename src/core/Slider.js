@@ -34,6 +34,8 @@ export class Slider {
             animationDuration: 600,
             animationEase: 'power2.out',
             pagination: false, // boolean or selector
+            arrows: true,
+            bullets: true,
             keyboard: true,
             scaleGradual: false,
             scaleOnCenter: false,

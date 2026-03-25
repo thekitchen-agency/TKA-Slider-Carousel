@@ -9,6 +9,7 @@ export default function Controls(slider, Components, events) {
 
         mount() {
             this.bind();
+            this.update();
         },
 
         bind() {
@@ -22,11 +23,25 @@ export default function Controls(slider, Components, events) {
 
                 el.addEventListener('click', (e) => {
                     e.preventDefault();
+                    if (!slider.options.arrows) return; // Don't move if disabled
                     this.move(direction);
                 });
 
                 if (direction === '<') this.prevItems.push(el);
                 if (direction === '>') this.nextItems.push(el);
+            });
+
+            events.on('breakpoint.change', () => {
+                this.update();
+            });
+        },
+
+        update() {
+            const { arrows } = slider.options;
+            const items = [...this.prevItems, ...this.nextItems];
+            
+            items.forEach(el => {
+                el.style.display = arrows ? '' : 'none';
             });
         },
 

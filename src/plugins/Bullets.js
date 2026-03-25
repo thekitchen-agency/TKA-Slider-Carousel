@@ -20,11 +20,15 @@ export default function Bullets(slider, Components, events) {
             events.on('mount.after', () => {
                 this.render();
             });
+
+            events.on('breakpoint.change', () => {
+                this.render();
+            });
         },
 
         render() {
             const { Html } = Components;
-            const { perView, loop } = slider.options;
+            const { perView, loop, bullets } = slider.options;
 
             // Attempt to find existing wrapper
             this.wrapper = Html.root.querySelector('[data-tka-bullets]');
@@ -33,6 +37,13 @@ export default function Bullets(slider, Components, events) {
             // Clear
             this.wrapper.innerHTML = '';
             this.items = [];
+
+            if (!bullets) {
+                this.wrapper.style.display = 'none';
+                return;
+            } else {
+                this.wrapper.style.display = '';
+            }
 
             // Calculate number of bullets
             // In loop mode, we skip the clones in our count

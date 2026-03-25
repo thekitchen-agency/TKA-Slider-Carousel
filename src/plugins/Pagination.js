@@ -7,28 +7,33 @@ export default function Pagination(slider, Components, events) {
         el: null,
 
         mount() {
-            if (!slider.options.pagination) return;
-
-            const { Html } = Components;
-            this.el = typeof slider.options.pagination === 'string'
-                ? Html.root.querySelector(slider.options.pagination)
-                : Html.root.querySelector('[data-tka-pagination]');
-
-            if (this.el) {
-                this.bind();
-                this.update();
-            }
+            this.bind();
+            this.update();
         },
 
         bind() {
             events.on('move.after', () => this.update());
+            events.on('breakpoint.change', () => this.update());
         },
 
         update() {
+            const { pagination, loop } = slider.options;
+            const { Html } = Components;
+
+            if (!this.el && pagination) {
+                this.el = typeof pagination === 'string'
+                    ? Html.root.querySelector(pagination)
+                    : Html.root.querySelector('[data-tka-pagination]');
+            }
+
             if (!this.el) return;
 
-            const { Html } = Components;
-            const { perView, loop } = slider.options;
+            if (!pagination) {
+                this.el.style.display = 'none';
+                return;
+            } else {
+                this.el.style.display = '';
+            }
 
             const total = loop
                 ? Html.slides.length - (slider.clonesCount * 2)

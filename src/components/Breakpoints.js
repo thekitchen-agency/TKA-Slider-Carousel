@@ -46,7 +46,10 @@ export default function Breakpoints(slider, Components, events) {
             if (
                 newOptions.perView !== slider.options.perView ||
                 newOptions.gap !== slider.options.gap ||
-                newOptions.focusAt !== slider.options.focusAt
+                newOptions.focusAt !== slider.options.focusAt ||
+                newOptions.arrows !== slider.options.arrows ||
+                newOptions.bullets !== slider.options.bullets ||
+                newOptions.pagination !== slider.options.pagination
             ) {
                 this.apply(newOptions);
             }
