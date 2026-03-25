@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/thekitchen-agency/tka-slider-carousel/compare/v1.9.0...v1.10.0) (2026-03-25)
+
+
+### Features
+
+* **core:** optimized 360 rotation, dynamic demo loading, and comprehensive documentation overhaul ([34ea870](https://github.com/thekitchen-agency/tka-slider-carousel/commit/34ea87003c5affbe1a4f9a5e4c86efea38a7f99d))
+
 # [1.10.0] - 2026-03-25
 
 ### Added
