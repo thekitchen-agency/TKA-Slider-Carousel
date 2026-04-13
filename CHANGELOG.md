@@ -1,3 +1,10 @@
+## [1.10.2](https://github.com/thekitchen-agency/tka-slider-carousel/compare/v1.10.1...v1.10.2) (2026-04-13)
+
+
+### Bug Fixes
+
+* resolve disappearing images and bounds outrun on rapid 360/slider clicks ([55ce84f](https://github.com/thekitchen-agency/tka-slider-carousel/commit/55ce84f555b2f562691f6ef40b0341145ac35eef))
+
 # [1.10.2] - 2026-04-13
 
 ### Fixed
