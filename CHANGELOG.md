@@ -1,5 +1,10 @@
-## [1.10.1](https://github.com/thekitchen-agency/tka-slider-carousel/compare/v1.10.0...v1.10.1) (2026-03-25)
+# [1.10.2] - 2026-04-13
 
+### Fixed
+- Fixed an issue where rapid clicking would bypass bounds checking, causing the slider to scroll past the cloned DOM elements into empty space.
+- Resolved an issue in the 360 viewer where rapid scrolling forced the component to fetch un-rendered frame placeholders, causing images to disappear during the animation.
+
+## [1.10.1](https://github.com/thekitchen-agency/tka-slider-carousel/compare/v1.10.0...v1.10.1) (2026-03-25)
 
 ### Bug Fixes
 

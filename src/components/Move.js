@@ -43,6 +43,61 @@ export default function Move(slider, Components, events) {
                 if (index < 0) index = count - 1;
             }
 
+            // Clamping for clone-based sliders
+            // Prevent users from clicking so fast that they outrun the available cloned DOM elements.
+            if (slider.options.loop && (type === 'slide' || type === 'coverflow' || type === '360')) {
+                const clonesCount = slider.clonesCount || 0;
+                const currentX = gsap.getProperty(Html.track, 'x') || 0;
+                const slideWidthWithGap = Track.slideWidth + slider.options.gap;
+                
+                if (slideWidthWithGap > 0) { // Safety check
+                    // currentVisualIndex is the exact decimal index we are currently looking at
+                    const currentVisualIndex = (Track.getOffset() - currentX) / slideWidthWithGap;
+                    
+                    // We only have `clonesCount` buffer. If the target index is further than our buffer, 
+                    // clamp it so the track doesn't fly into empty space.
+                    const maxForward = currentVisualIndex + clonesCount - 1;
+                    const maxBackward = currentVisualIndex - clonesCount + 1;
+                    
+                    if (index > maxForward) {
+                        index = Math.max(slider.state.index, Math.floor(maxForward));
+                    } else if (index < maxBackward) {
+                        index = Math.min(slider.state.index, Math.ceil(maxBackward));
+                    }
+                }
+            }
+
+            // Real-time boundary shift for clone-based sliders
+            // Prevents "disappearing images" by snapping track/index seamlessly 
+            // BEFORE creating a new tween when the user clicks very fast.
+            if (slider.options.loop && (type === 'slide' || type === 'coverflow' || type === '360')) {
+                const clonesCount = slider.clonesCount || 0;
+                const originalCount = Html.slides.length - (clonesCount * 2);
+
+                if (originalCount > 0) {
+                    const slideWidthWithGap = Track.slideWidth + slider.options.gap;
+                    const totalWidth = originalCount * slideWidthWithGap;
+                    
+                    while (index >= clonesCount + originalCount) {
+                        index -= originalCount;
+                        slider.state.index -= originalCount;
+                        const currentX = gsap.getProperty(Html.track, 'x') || 0;
+                        gsap.set(Html.track, { x: currentX + totalWidth });
+                    }
+                    while (index < clonesCount) {
+                        index += originalCount;
+                        slider.state.index += originalCount;
+                        const currentX = gsap.getProperty(Html.track, 'x') || 0;
+                        gsap.set(Html.track, { x: currentX - totalWidth });
+                    }
+                    
+                    // We must emit a move event here to instantly update the Effects component
+                    // so it syncs its internal states (like 360 frames) with the new trackX.
+                    // Doing this synchronously avoids a 1-tick flash.
+                    events.emit('move', { x: gsap.getProperty(Html.track, 'x'), jump: true });
+                }
+            }
+
             // Update index immediately to prevent race conditions on rapid clicks
             slider.state.index = index;
             slider.state.animationDuration = duration;
@@ -73,16 +128,7 @@ export default function Move(slider, Components, events) {
                 },
                 onComplete: () => {
                     slider.state.animationDuration = 0;
-
-                    let jumped = false;
-                    if (slider.options.loop) {
-                        jumped = this.loop(slider.state.index);
-                    }
-
-                    // Only emit move.after if we didn't already emit it via jump()
-                    if (!jumped) {
-                        events.emit('move.after', { index: slider.state.index });
-                    }
+                    events.emit('move.after', { index: slider.state.index });
                 }
             });
         },
