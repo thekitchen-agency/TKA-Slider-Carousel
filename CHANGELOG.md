@@ -1,3 +1,10 @@
+# [1.11.0](https://github.com/thekitchen-agency/tka-slider-carousel/compare/v1.10.2...v1.11.0) (2026-08-11)
+
+
+### Features
+
+* add single-rotate transition and thumbs panel layout options ([df91e92](https://github.com/thekitchen-agency/tka-slider-carousel/commit/df91e92b2648008f3064c6c6232964951faa5298))
+
 ## [1.10.2](https://github.com/thekitchen-agency/tka-slider-carousel/compare/v1.10.1...v1.10.2) (2026-04-13)
 
 
