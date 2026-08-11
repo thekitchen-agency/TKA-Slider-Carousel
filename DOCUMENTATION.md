@@ -39,7 +39,7 @@ These settings apply regardless of the transition type selected.
 
 | Option | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
-| `type` | `String` | `'slide'` | Transition engine: `'slide'`, `'fade'`, `'coverflow'`, `'fan'`, or `'360'`. |
+| `type` | `String` | `'slide'` | Transition engine: `'slide'`, `'fade'`, `'coverflow'`, `'fan'`, `'360'`, or `'single-rotate'`. |
 | `startAt` | `Number` | `0` | Starting slide index. |
 | `perView` | `Number` | `1` | Number of slides visible in the viewport. |
 | `focusAt` | `String\|Number` | `0` | Align active slide to: `0` (left), `'center'`, or a specific index offset. |
@@ -106,6 +106,17 @@ Interactive frame-based rotation (`type: '360'`).
 | Option | Type | Default | Description |
 | :--- | :--- | :--- | :--- |
 | `rotationSpeed` | `Number` | `1` | Sensitivity of rotation. Maps slide-width movement to frame shifts. |
+
+### D. 2D Circular (Single-Rotate) Effect
+The 2D circular path rotation interaction (`type: 'single-rotate'`).
+
+| Option | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `singleRotateRadius` | `Number` | `2500` | The radius (in pixels) of the circular arc path. Larger values flatten the arc. |
+| `singleRotateInvert` | `Boolean` | `false` | Flips the curvature of the arc. Set `true` to align slides along a convex/dome path (peaking in the center, corners touching). |
+| `singleRotateOpacity` | `Number` | `0.55` | The minimum opacity for distant/non-focused slides. |
+| `singleRotateScale` | `Number` | `1.0` | The scale of non-focused slides. Locked at `1.0` to preserve mathematical edge-to-edge alignment. |
+| `singleRotateShift` | `Number` | `0.0` | Visual offset multiplier. Default is `0.0` for exact edge-to-edge bottom-corner alignment (zero overlapping). |
 
 ---
 

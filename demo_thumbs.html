@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TKA Slider - Slide with Thumbs Panel</title>
+    <link rel="stylesheet" href="dist/tka-slider-carousel.css">
+    <style>
+        :root {
+            --bg-color: #f3f4f6;
+            --text-color: #1f2937;
+            --primary-rose: #e8a598;
+            --primary-rose-hover: #df9182;
+            --panel-bg: rgba(255, 255, 255, 0.45);
+        }
+
+        body {
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+
+        .showcase-container {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+        }
+
+        /* The Main Slider taking full size */
+        .tka-slider {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .tka-slider__track {
+            height: 100%;
+        }
+
+        .tka-slider__slide {
+            height: 100%;
+        }
+
+        .hero-slide {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+        }
+
+        /* Overlay shadow for slide titles */
+        .hero-slide::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 40%;
+            background: linear-gradient(to top, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);
+            pointer-events: none;
+        }
+
+        .slide-content {
+            position: absolute;
+            bottom: 60px;
+            left: 80px;
+            color: white;
+            z-index: 10;
+        }
+
+        .slide-content h2 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 0 0 10px 0;
+            letter-spacing: -0.02em;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .slide-content p {
+            font-size: 1.2rem;
+            margin: 0;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Right Panel Wrapper containing thumbs and outside controls */
+        .right-panel-wrapper {
+            position: absolute;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            z-index: 100;
+            width: 120px;
+        }
+
+        /* Floating Thumbs Panel (bordered glassmorphic element) */
+        .thumbs-panel {
+            width: 100%;
+            background: var(--panel-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 20px 16px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            box-sizing: border-box;
+        }
+
+        /* Thumbnails vertical stack (max 5 visible, hidden scroll) */
+        .thumbs-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            height: 378px;
+            /* Exactly 5 thumbs of height 66px + 4 gaps of 12px */
+            overflow-y: scroll;
+            scrollbar-width: none;
+            /* Firefox */
+            -ms-overflow-style: none;
+            /* IE and Edge */
+        }
+
+        .thumbs-container::-webkit-scrollbar {
+            display: none;
+            /* Chrome, Safari and Opera */
+        }
+
+        .thumb-btn {
+            width: 100%;
+            aspect-ratio: 4/3;
+            border-radius: 12px;
+            background-size: cover;
+            background-position: center;
+            border: 2px solid transparent;
+            cursor: pointer;
+            opacity: 0.55;
+            transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .thumb-btn:hover {
+            opacity: 0.85;
+            transform: scale(1.04);
+        }
+
+        .thumb-btn.is-active {
+            opacity: 1;
+            border-color: white;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.25);
+            transform: scale(1.08);
+        }
+
+        /* Arrows Container inside panel */
+        .panel-controls {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        .panel-controls button {
+            flex: 1;
+            aspect-ratio: 1/1;
+            border-radius: 50%;
+            background-color: var(--primary-rose);
+            border: none;
+            color: #1c1917;
+            font-size: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .panel-controls button:hover {
+            background-color: var(--primary-rose-hover);
+            transform: scale(1.08);
+        }
+
+        .panel-controls button:active {
+            transform: scale(0.95);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="showcase-container">
+        <!-- Main Image Slider -->
+        <div class="tka-slider" id="slider-thumbs">
+            <div class="tka-slider__track">
+                <div class="tka-slider__slide">
+                    <div class="hero-slide" style="background-image: url('images/exterior_building.png');">
+                        <div class="slide-content">
+                            <h2>Prime Residence</h2>
+                            <p>Stunning architectural exterior in high-end European design.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tka-slider__slide">
+                    <div class="hero-slide" style="background-image: url('images/interior_living_room.png');">
+                        <div class="slide-content">
+                            <h2>Minimalist Living Room</h2>
+                            <p>Elegant design meeting natural textures and lines.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tka-slider__slide">
+                    <div class="hero-slide" style="background-image: url('images/interior_kitchen.png');">
+                        <div class="slide-content">
+                            <h2>Sleek Kitchen</h2>
+                            <p>High-end workspace with state-of-the-art details.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tka-slider__slide">
+                    <div class="hero-slide" style="background-image: url('images/interior_bedroom.png');">
+                        <div class="slide-content">
+                            <h2>Contemporary Bedroom</h2>
+                            <p>Peaceful sanctuary with premium marble and wood details.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tka-slider__slide">
+                    <div class="hero-slide" style="background-image: url('images/interior_lounge.png');">
+                        <div class="slide-content">
+                            <h2>Luxury Penthouse Lounge</h2>
+                            <p>Double-height ceiling overlooking an urban cityscape.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tka-slider__slide">
+                    <div class="hero-slide" style="background-image: url('images/interior_lounge.png');">
+                        <div class="slide-content">
+                            <h2>Luxury Penthouse Lounge</h2>
+                            <p>Double-height ceiling overlooking an urban cityscape.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tka-slider__slide">
+                    <div class="hero-slide" style="background-image: url('images/interior_lounge.png');">
+                        <div class="slide-content">
+                            <h2>Luxury Penthouse Lounge</h2>
+                            <p>Double-height ceiling overlooking an urban cityscape.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tka-slider__slide">
+                    <div class="hero-slide" style="background-image: url('images/interior_lounge.png');">
+                        <div class="slide-content">
+                            <h2>Luxury Penthouse Lounge</h2>
+                            <p>Double-height ceiling overlooking an urban cityscape.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tka-slider__slide">
+                    <div class="hero-slide" style="background-image: url('images/interior_lounge.png');">
+                        <div class="slide-content">
+                            <h2>Luxury Penthouse Lounge</h2>
+                            <p>Double-height ceiling overlooking an urban cityscape.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tka-slider__slide">
+                    <div class="hero-slide" style="background-image: url('images/interior_lounge.png');">
+                        <div class="slide-content">
+                            <h2>Luxury Penthouse Lounge</h2>
+                            <p>Double-height ceiling overlooking an urban cityscape.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel Wrapper (containing the thumbs panel and the controls outside it) -->
+        <div class="right-panel-wrapper">
+            <!-- Thumbs Panel (glassmorphic bordered element) -->
+            <div class="thumbs-panel">
+                <div class="thumbs-container">
+                    <div class="thumb-btn is-active" style="background-image: url('images/exterior_building.png');">
+                    </div>
+                    <div class="thumb-btn" style="background-image: url('images/interior_living_room.png');"></div>
+                    <div class="thumb-btn" style="background-image: url('images/interior_kitchen.png');"></div>
+                    <div class="thumb-btn" style="background-image: url('images/interior_bedroom.png');"></div>
+                    <div class="thumb-btn" style="background-image: url('images/interior_lounge.png');"></div>
+                    <div class="thumb-btn" style="background-image: url('images/interior_lounge.png');"></div>
+                    <div class="thumb-btn" style="background-image: url('images/interior_lounge.png');"></div>
+                    <div class="thumb-btn" style="background-image: url('images/interior_lounge.png');"></div>
+                    <div class="thumb-btn" style="background-image: url('images/interior_lounge.png');"></div>
+                    <div class="thumb-btn" style="background-image: url('images/interior_lounge.png');"></div>
+                    <div class="thumb-btn" style="background-image: url('images/interior_lounge.png');"></div>
+                </div>
+            </div>
+
+            <!-- Panel Controls (sitting outside the bordered thumbs panel) -->
+            <div class="panel-controls">
+                <button id="btn-prev">←</button>
+                <button id="btn-next">→</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "gsap": "https://esm.sh/gsap@3.12.5",
+            "gsap/Draggable": "https://esm.sh/gsap@3.12.5/Draggable"
+        }
+    }
+    </script>
+
+    <script type="module">
+        import gsap from 'gsap';
+        import { Draggable } from 'gsap/Draggable';
+        import Slider from './src/index.js';
+
+        gsap.registerPlugin(Draggable);
+
+        // Initialize the slider in standard slide mode
+        const slider = new Slider('#slider-thumbs', {
+            type: 'slide',
+            perView: 1,
+            focusAt: 'center',
+            loop: true,
+            animationDuration: 800
+        }).mount();
+
+        const thumbs = document.querySelectorAll('.thumb-btn');
+
+        // Helper to get normalized index excluding clones
+        const getNormalizedIndex = (index) => {
+            if (!slider.options.loop) return index;
+            const originalCount = thumbs.length;
+            let activeIndex = (index - slider.clonesCount) % originalCount;
+            if (activeIndex < 0) activeIndex += originalCount;
+            return activeIndex;
+        };
+
+        // Sync Active Thumb on Move
+        slider.on('move.after', ({ index }) => {
+            const activeIndex = getNormalizedIndex(index);
+            thumbs.forEach((btn, i) => {
+                if (i === activeIndex) {
+                    btn.classList.add('is-active');
+                    // Smoothly scroll the container to make active thumb visible
+                    btn.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                } else {
+                    btn.classList.remove('is-active');
+                }
+            });
+        });
+
+        // Click Thumbnail to Navigate
+        thumbs.forEach((btn, i) => {
+            btn.addEventListener('click', () => {
+                slider.go(i);
+            });
+        });
+
+        // Link Panel Arrows to Slider
+        document.getElementById('btn-prev').addEventListener('click', () => {
+            slider.go('<');
+        });
+
+        document.getElementById('btn-next').addEventListener('click', () => {
+            slider.go('>');
+        });
+    </script>
+</body>
+
+</html>

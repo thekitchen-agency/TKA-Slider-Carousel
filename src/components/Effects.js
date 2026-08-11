@@ -136,6 +136,46 @@ export default function Effects(slider, Components, events) {
                     // Z-Index Management to ensure center is always on top
                     slide.style.zIndex = 10 - Math.floor(normalizedDistance);
                 }
+                else if (type === 'single-rotate') {
+                    const minOpacity = slider.options.singleRotateOpacity !== undefined ? slider.options.singleRotateOpacity : 0.15;
+                    const radius = slider.options.singleRotateRadius !== undefined ? slider.options.singleRotateRadius : 1500;
+                    const invert = slider.options.singleRotateInvert !== undefined ? slider.options.singleRotateInvert : false;
+
+                    // Calculate angle on the 2D circle path based on width and radius
+                    const angle = signedDistance * (slideWidthWithGap / radius);
+                    const absAngle = Math.abs(angle);
+
+                    // Flip signs based on invert option (invert: true = dome path, false = valley path)
+                    const rotSign = invert ? 1 : -1;
+                    const ySign = invert ? 1 : -1;
+
+                    // 2D Rotation (Z-rotation) tangent to the circle path
+                    props.rotation = rotSign * angle * (180 / Math.PI);
+
+                    // No scale effect: always 1.0
+                    props.scale = 1;
+                    props.opacity = this.isRevealed ? Math.max(0, 1 - (normalizedDistance * (1 - minOpacity))) : 0;
+
+                    // Height & Width of the slide element
+                    const H = slide.offsetHeight || 550;
+                    const W = Track.slideWidth;
+
+                    // Calculate X and Y positions for exact corner alignment (bottom corners touching, with gap support)
+                    const G = slider.options.gap || 0;
+                    const targetX = signedDistance * (W / 2 + (W / 2) * Math.cos(absAngle) + (H / 2) * Math.sin(absAngle) + G);
+                    const targetY = ySign * (H / 2 + (W / 2) * Math.sin(absAngle) - (H / 2) * Math.cos(absAngle));
+
+                    // Since Track handles the linear movement, we apply the difference to props.x
+                    const flatX = signedDistance * slideWidthWithGap;
+                    props.x = targetX - flatX;
+                    props.y = targetY;
+
+                    // Reset 3D Y-rotation and Z-depth to prevent conflicts
+                    props.rotationY = 0;
+                    props.z = 0;
+
+                    slide.style.zIndex = 10 - Math.floor(normalizedDistance);
+                }
                 else if (type === '360') {
                     const container = inner.querySelector('.tka-360-container') || inner;
                     const frames = Array.from(container.children).filter(child =>
@@ -270,7 +310,7 @@ export default function Effects(slider, Components, events) {
 
                 // For track-linked animations (slide, coverflow, 360), we must sync 
                 // instantly to the track position. The track itself is already handled by Move.js
-                const isTrackLinked = type === 'slide' || type === 'coverflow' || type === '360';
+                const isTrackLinked = type === 'slide' || type === 'coverflow' || type === '360' || type === 'single-rotate';
 
                 if (jump || isTrackLinked) {
                     gsap.set(inner, props);

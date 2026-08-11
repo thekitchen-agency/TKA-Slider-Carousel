@@ -54,6 +54,15 @@ export class Slider {
             activeScale: 1,
             activeTranslateY: 0,
 
+            // Single-rotate specifics
+            singleRotateRotation: 20,
+            singleRotateDepth: -120,
+            singleRotateScale: 0.9,
+            singleRotateOpacity: 0.15,
+            singleRotateShift: 0.25,
+            singleRotateRadius: 1500,
+            singleRotateInvert: false,
+
             // Coverflow specifics
             coverflowRotation: 45,
             coverflowDepth: -200,
@@ -189,7 +198,7 @@ export class Slider {
      */
     jump(index) {
         let target = index;
-        if (this.options.loop && this.options.type === 'slide') {
+        if (this.options.loop && (this.options.type === 'slide' || this.options.type === 'coverflow' || this.options.type === '360' || this.options.type === 'single-rotate')) {
             target += (this.clonesCount || 0);
         }
 

@@ -13,12 +13,12 @@ export default function Move(slider, Components, events) {
         tween: null,
 
         mount() {
-            this.bind();
+            Move.bind();
         },
 
         bind() {
             events.on('resize', () => {
-                this.to(slider.state.index, { duration: 0 });
+                Move.to(slider.state.index, { duration: 0 });
             });
         },
 
@@ -34,7 +34,7 @@ export default function Move(slider, Components, events) {
             const duration = options.duration !== undefined ? options.duration : (animationDuration / 1000);
             const ease = options.ease || animationEase;
 
-            if (this.tween) this.tween.kill();
+            if (Move.tween) Move.tween.kill();
 
             // Handle looping for effects that don't use clones (fan/fade)
             if ((type === 'fade' || type === 'fan') && slider.options.loop) {
@@ -43,34 +43,22 @@ export default function Move(slider, Components, events) {
                 if (index < 0) index = count - 1;
             }
 
-            // Clamping for clone-based sliders
-            // Prevent users from clicking so fast that they outrun the available cloned DOM elements.
-            if (slider.options.loop && (type === 'slide' || type === 'coverflow' || type === '360')) {
-                const clonesCount = slider.clonesCount || 0;
-                const currentX = gsap.getProperty(Html.track, 'x') || 0;
-                const slideWidthWithGap = Track.slideWidth + slider.options.gap;
+            // Clamping for clone-based sliders to keep index within physical track bounds
+            if (slider.options.loop && (type === 'slide' || type === 'coverflow' || type === '360' || type === 'single-rotate')) {
+                const maxForward = Html.slides.length - 1;
+                const maxBackward = 0;
                 
-                if (slideWidthWithGap > 0) { // Safety check
-                    // currentVisualIndex is the exact decimal index we are currently looking at
-                    const currentVisualIndex = (Track.getOffset() - currentX) / slideWidthWithGap;
-                    
-                    // We only have `clonesCount` buffer. If the target index is further than our buffer, 
-                    // clamp it so the track doesn't fly into empty space.
-                    const maxForward = currentVisualIndex + clonesCount - 1;
-                    const maxBackward = currentVisualIndex - clonesCount + 1;
-                    
-                    if (index > maxForward) {
-                        index = Math.max(slider.state.index, Math.floor(maxForward));
-                    } else if (index < maxBackward) {
-                        index = Math.min(slider.state.index, Math.ceil(maxBackward));
-                    }
+                if (index > maxForward) {
+                    index = maxForward;
+                } else if (index < maxBackward) {
+                    index = maxBackward;
                 }
             }
 
             // Real-time boundary shift for clone-based sliders
             // Prevents "disappearing images" by snapping track/index seamlessly 
             // BEFORE creating a new tween when the user clicks very fast.
-            if (slider.options.loop && (type === 'slide' || type === 'coverflow' || type === '360')) {
+            if (slider.options.loop && (type === 'slide' || type === 'coverflow' || type === '360' || type === 'single-rotate')) {
                 const clonesCount = slider.clonesCount || 0;
                 const originalCount = Html.slides.length - (clonesCount * 2);
 
@@ -113,7 +101,7 @@ export default function Move(slider, Components, events) {
             const coordinate = Track.getCoordinate(index);
             const totalWidth = Html.slides.length * (Track.slideWidth + slider.options.gap); // This is not quite right for loop swap
 
-            this.tween = gsap.to(Html.track, {
+            Move.tween = gsap.to(Html.track, {
                 x: -coordinate,
                 duration: duration,
                 ease: ease,
@@ -128,6 +116,9 @@ export default function Move(slider, Components, events) {
                 },
                 onComplete: () => {
                     slider.state.animationDuration = 0;
+                    if (slider.options.loop) {
+                        Move.loop(slider.state.index);
+                    }
                     events.emit('move.after', { index: slider.state.index });
                 }
             });
@@ -147,12 +138,12 @@ export default function Move(slider, Components, events) {
 
             // If we are at the prepended clones (start)
             if (index < clonesCount - eps) {
-                this.jump(index + originalCount);
+                Move.jump(index + originalCount);
                 return true;
             }
             // If we are at the appended clones (end)
             else if (index > (originalCount + clonesCount - 1) + eps) {
-                this.jump(index - originalCount);
+                Move.jump(index - originalCount);
                 return true;
             }
 
